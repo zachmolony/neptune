@@ -9,7 +9,8 @@ module.exports = {
         tertiary: "#566086",
         quaternary: "#2F3650",
         gray: "#EEEEEE",
-        lightGray: "#C1C1C1"
+        lightGray: "#C1C1C1",
+        darkGray: "#484848"
       }
     }
   },
