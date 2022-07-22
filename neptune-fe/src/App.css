@@ -11,3 +11,7 @@
   font-family: "San Francisco";
   font-weight: 700;
 } */
+
+.Polaris-Badge--statusSuccess {
+  background-color: #8be1af;
+}

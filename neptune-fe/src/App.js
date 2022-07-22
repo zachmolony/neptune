@@ -12,7 +12,7 @@ export default function App() {
       >
         <Navbar />
       </div>
-      <div className="w-4/5 h-full">
+      <div className="w-4/5 h-full overflow-scroll">
         <Outlet />
       </div>
     </div>

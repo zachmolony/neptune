@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Card from "../../components/Card";
+import CardWrapper from "../../components/CardWrapper";
 import ScreenWrapper from "../../components/ScreenWrapper";
 
 const DeveloperDashboard = () => {
@@ -8,7 +8,7 @@ const DeveloperDashboard = () => {
     <>
       <ScreenWrapper>
         <h1>Dashboard</h1>
-        <Card>Yeah</Card>
+        <CardWrapper>Yeah</CardWrapper>
       </ScreenWrapper>
     </>
   );
