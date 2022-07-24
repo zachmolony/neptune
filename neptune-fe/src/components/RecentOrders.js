@@ -1,88 +1,8 @@
-import { IndexTable, TextStyle, useIndexResourceState } from "@shopify/polaris";
 import React from "react";
+import { IndexTable, TextStyle, useIndexResourceState } from "@shopify/polaris";
 
 const RecentOrders = () => {
   const customers = [
-    {
-      id: "3411",
-      url: "customers/341",
-      name: "Mae Jemison",
-      location: "Decatur, USA",
-      orders: 20,
-      amountSpent: "$2,400"
-    },
-    {
-      id: "3411",
-      url: "customers/341",
-      name: "Mae Jemison",
-      location: "Decatur, USA",
-      orders: 20,
-      amountSpent: "$2,400"
-    },
-    {
-      id: "3411",
-      url: "customers/341",
-      name: "Mae Jemison",
-      location: "Decatur, USA",
-      orders: 20,
-      amountSpent: "$2,400"
-    },
-    {
-      id: "3411",
-      url: "customers/341",
-      name: "Mae Jemison",
-      location: "Decatur, USA",
-      orders: 20,
-      amountSpent: "$2,400"
-    },
-    {
-      id: "3411",
-      url: "customers/341",
-      name: "Mae Jemison",
-      location: "Decatur, USA",
-      orders: 20,
-      amountSpent: "$2,400"
-    },
-    {
-      id: "3411",
-      url: "customers/341",
-      name: "Mae Jemison",
-      location: "Decatur, USA",
-      orders: 20,
-      amountSpent: "$2,400"
-    },
-    {
-      id: "3411",
-      url: "customers/341",
-      name: "Mae Jemison",
-      location: "Decatur, USA",
-      orders: 20,
-      amountSpent: "$2,400"
-    },
-    {
-      id: "3411",
-      url: "customers/341",
-      name: "Mae Jemison",
-      location: "Decatur, USA",
-      orders: 20,
-      amountSpent: "$2,400"
-    },
-    {
-      id: "3411",
-      url: "customers/341",
-      name: "Mae Jemison",
-      location: "Decatur, USA",
-      orders: 20,
-      amountSpent: "$2,400"
-    },
-    {
-      id: "3411",
-      url: "customers/341",
-      name: "Mae Jemison",
-      location: "Decatur, USA",
-      orders: 20,
-      amountSpent: "$2,400"
-    },
     {
       id: "3411",
       url: "customers/341",

@@ -2,6 +2,7 @@ import React from "react";
 import Navbar from "./components/Navbar";
 import "./App.css";
 import { Outlet } from "react-router";
+import { ProductsProvider } from "./context/products";
 
 export default function App() {
   return (
@@ -13,7 +14,9 @@ export default function App() {
         <Navbar />
       </div>
       <div className="w-4/5 h-full overflow-scroll">
-        <Outlet />
+        <ProductsProvider>
+          <Outlet />
+        </ProductsProvider>
       </div>
     </div>
   );

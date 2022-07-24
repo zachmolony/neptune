@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { useParallax } from "react-scroll-parallax";
 
 import Stars from "../assets/stars.webp";
 import NeptuneLogo from "../assets/planet.jpeg";
@@ -13,8 +14,8 @@ import Footer from "../components/Footer";
 
 const content = {
   build: {
-    headline: "Build and ship e-commerce sites that ",
-    highlighted: "scale.",
+    headline: "Launch websites that earn  ",
+    highlighted: "passive income",
     img: Rocketship,
     alt: "Rocket ship",
     subtitle:
@@ -22,7 +23,7 @@ const content = {
   },
   performance: {
     headline: "Fees that work for both your client, and ",
-    highlighted: "you.",
+    highlighted: "you",
     img: Performance,
     alt: "Performance Graph",
     subtitle:
@@ -30,7 +31,7 @@ const content = {
   },
   tools: {
     headline: "Manage multiple clients from the ",
-    highlighted: "same place.",
+    highlighted: "same place",
     img: Tools,
     alt: "Tools",
     subtitle:
@@ -39,6 +40,11 @@ const content = {
 };
 
 const Home = () => {
+  const planetScroll = useParallax({ speed: 4, translateY: [20, -110] });
+  const landingTextScroll = useParallax({ speed: 10 });
+
+  const imageScroll = useParallax({ speed: 10 });
+  const textScroll = useParallax({ speed: -10 });
   return (
     <>
       <div className="h-full w-full bg-secondary text-white">
@@ -54,20 +60,24 @@ const Home = () => {
               <img
                 src={NeptuneLogo}
                 alt="Planet Neptune"
+                ref={planetScroll.ref}
                 className="relative top-1/2 -translate-y-1/2 mx-auto max-h-sm justify-center h-1/2"
               />
             </div>
           </div>
         </div>
         <div className="h-screen m-auto xl:max-w-screen-2xl flex">
-          <div className="w-full h-4/5 mx-12 my-auto z-10 relative flex">
+          <div
+            className="w-full h-4/5 mx-12 my-auto z-10 relative flex"
+            ref={landingTextScroll.ref}
+          >
             <div className="w-1/2">
-              <h1 className="p-32 font-bold text-6xl">
+              <h1 className="p-32 font-bold text-6xl xl:text-7xl">
                 Welcome to <strong className="font-black">Neptune.</strong>
               </h1>
             </div>
             <div className="w-1/2 mt-auto 2xl:pl-32">
-              <h2 className="pl-24 pr-8 lg:pl-32 ml-12 pb-32 font-bold text-2xl">
+              <h2 className="pl-24 pr-8 lg:pl-32 ml-12 pb-32 font-bold text-2xl xl:text-3xl">
                 The e-commerce platform built by developers, for developers.
               </h2>
             </div>
@@ -75,20 +85,14 @@ const Home = () => {
         </div>
         <HomeBar />
 
-        <PageWrapper>
-          <SalesContent {...content.build} />
-        </PageWrapper>
+        {Object.keys(content).map((page, index) => (
+          <PageWrapper>
+            <SalesContent {...content[page]} flipped={!!(index % 2)} />
+          </PageWrapper>
+        ))}
 
         <PageWrapper>
-          <SalesContent {...content.performance} flipped />
-        </PageWrapper>
-
-        <PageWrapper>
-          <SalesContent {...content.tools} />
-        </PageWrapper>
-
-        <PageWrapper>
-          <div className="w-7/12">
+          <div className="w-7/12" ref={textScroll.ref}>
             <h1 className="text-6xl font-bold mb-33">
               E-commerce development made simple.{" "}
               <span className="text-primary">That’s Neptune.</span>
@@ -106,6 +110,7 @@ const Home = () => {
               <img
                 src={NeptuneLogo}
                 alt={"alt"}
+                ref={imageScroll.ref}
                 style={{ maxHeight: "100%" }}
               />
             </div>

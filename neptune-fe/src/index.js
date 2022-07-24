@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { ParallaxProvider, Parallax } from "react-scroll-parallax";
 
 import "@shopify/polaris/build/esm/styles.css";
 import enTranslations from "@shopify/polaris/locales/en.json";
@@ -21,7 +22,14 @@ root.render(
   <AppProvider i18n={enTranslations}>
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Home />}></Route>
+        <Route
+          path="/"
+          element={
+            <ParallaxProvider>
+              <Home />
+            </ParallaxProvider>
+          }
+        ></Route>
         <Route path="store" element={<App />}>
           <Route path="dashboard" element={<StoreOwnerDashboard />}></Route>
           <Route path="orders" element={<Orders />}></Route>

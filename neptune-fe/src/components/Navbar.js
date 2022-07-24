@@ -13,7 +13,7 @@ const navlinks = {
     discounts: "Discounts"
   },
   developer: {
-    dashboard: "Dashboard",
+    dashboard1: "Dashboard",
     clients: "Clients"
   }
 };
