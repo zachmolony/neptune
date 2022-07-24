@@ -13,8 +13,12 @@ import RecentOrders from "../../components/RecentOrders";
 import MySiteContent from "../../components/MySiteContent.js";
 
 import SalesGraph from "../../assets/salesGraph.png";
+import { useProducts } from "../../context/products";
 
 const DashboardContent = () => {
+  const { products } = useProducts();
+  console.log("products", products);
+
   return (
     <Page fullWidth>
       <div className="py-4">
