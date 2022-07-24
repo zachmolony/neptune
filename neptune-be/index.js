@@ -1,52 +1,69 @@
 const express = require("express");
-var cors = require("cors");
-const app = express();
+const cors = require("cors");
+const bodyParser = require("body-parser");
 // This is your test secret API key.
 const stripe = require("stripe")("sk_test_7HobkYqAO6exIj2b4PO25KUN", {
   apiVersion: "2018-08-23; orders_beta=v4"
 });
 
+const app = express();
 const port = 4242;
 
+app.use(express.static("public"));
 app.use(cors());
 
-app.use(express.static("public"));
-app.use(express.json());
-
-const calculateOrderAmount = (items) => {
-  // Replace this constant with a calculation of the order's amount
-  // Calculate the order total on the server to prevent
-  // people from directly manipulating the amount on the client
-  return 1400;
+// Define/retrieve product details on backend server.
+const products = {
+  trinket_club_hat: {
+    name: "Trinket Club Hat",
+    unit_amount: 1000,
+    currency: "usd"
+  }
 };
 
-app.get("/", (req, res) => {
-  res.send("hello mate");
-});
+// Generate line items using existing product information.
+const generateLineItems = (items) => {
+  return items.map((item) => {
+    // Add any logic needed to validate product IDs and
+    // quantities here. For example: inventory checks.
+    const product = products[item.product];
+    if (!product) {
+      throw "Invalid product";
+    }
+    return {
+      product_data: {
+        id: item.product,
+        name: product.name
+      },
+      price_data: {
+        unit_amount: product.unit_amount
+      },
+      quantity: item.quantity
+    };
+  });
+};
 
-app.post("/create-payment-intent", async (req, res) => {
+app.post("/create-order", bodyParser.json(), async (req, res) => {
   const { items } = req.body;
 
-  // Create a PaymentIntent with the order amount and currency
-  const paymentIntent = await stripe.paymentIntents.create({
-    amount: calculateOrderAmount(items),
-    currency: "gbp",
-    automatic_payment_methods: {
-      enabled: true
-    }
+  try {
+    lineItems = generateLineItems(items);
+  } catch (e) {
+    return res.status(400).send({ error: e.message });
+  }
+
+  const order = await stripe.orders.create({
+    currency: "usd",
+    line_items: lineItems
   });
 
   res.send({
-    clientSecret: paymentIntent.client_secret
+    clientSecret: order.client_secret
   });
 });
 
-app.get("/products", async (req, res) => {
-  const products = await stripe.products.list({
-    limit: 3
-  });
-
-  res.send(products.data);
+app.get("/", (req, res) => {
+  res.send("hello mate");
 });
 
 app.get("/orders", async (req, res) => {
@@ -55,6 +72,14 @@ app.get("/orders", async (req, res) => {
   });
 
   res.send(orders.data);
+});
+
+app.get("/products", async (req, res) => {
+  const products = await stripe.products.list({
+    limit: 3
+  });
+
+  res.send(products.data);
 });
 
 app.listen(port, () => console.log(`"Node server listening on port ${port}!"`));
