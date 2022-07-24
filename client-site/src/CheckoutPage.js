@@ -4,22 +4,27 @@ import { Elements } from "@stripe/react-stripe-js";
 
 import CheckoutForm from "./CheckoutForm";
 import "./App.css";
-import { ProductsProvider } from "./context/products";
 
 // Make sure to call loadStripe outside of a component’s render to avoid
 // recreating the Stripe object on every render.
 // This is your test publishable API key.
-const stripePromise = loadStripe("pk_test_9xvq93nGHz35YvMaJQBkr2R3");
+const stripePromise = loadStripe("pk_test_9xvq93nGHz35YvMaJQBkr2R3", {
+  betas: ["process_order_beta_1"],
+  apiVersion: "2018-08-23; orders_beta=v4"
+});
 
-export default function App() {
+export default function CheckoutPage() {
   const [clientSecret, setClientSecret] = useState("");
 
   useEffect(() => {
-    // Create PaymentIntent as soon as the page loads
-    fetch("/create-payment-intent", {
+    // The items the customer wants to buy
+    const items = [{ product: "trinket_club_hat", quantity: 1 }];
+
+    // Create Order as soon as the page loads
+    fetch("http://localhost:4242/create-order", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ items: [{ id: "xl-tshirt" }] })
+      body: JSON.stringify({ items: items })
     })
       .then((res) => res.json())
       .then((data) => setClientSecret(data.clientSecret));
@@ -35,13 +40,11 @@ export default function App() {
 
   return (
     <div className="App">
-      <ProductsProvider>
-        {clientSecret && (
-          <Elements options={options} stripe={stripePromise}>
-            <CheckoutForm />
-          </Elements>
-        )}
-      </ProductsProvider>
+      {clientSecret && (
+        <Elements options={options} stripe={stripePromise}>
+          <CheckoutForm />
+        </Elements>
+      )}
     </div>
   );
 }
