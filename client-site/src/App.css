@@ -1,10 +1,22 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: "Common Pixel";
+  font-style: normal;
+  font-weight: 400;
+  src: local("Common Pixel"),
+    url("https://fonts.cdnfonts.com/s/7553/COMMP___.woff") format("woff");
+}
+
 #root {
   display: flex;
   align-items: center;
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: "Common Pixel", sans-serif;
   font-size: 16px;
   -webkit-font-smoothing: antialiased;
   display: flex;
@@ -39,14 +51,13 @@ form {
 /* Buttons and links */
 button {
   background: #5469d4;
-  font-family: Arial, sans-serif;
+  font-family: Common Pixel, sans-serif;
   color: #ffffff;
   border-radius: 4px;
   border: 0;
   padding: 12px 16px;
   font-size: 16px;
   font-weight: 600;
-  cursor: pointer;
   display: block;
   transition: all 0.2s ease;
   box-shadow: 0px 4px 5.5px 0px rgba(0, 0, 0, 0.07);
@@ -59,7 +70,6 @@ button:hover {
 
 button:disabled {
   opacity: 0.5;
-  cursor: default;
 }
 
 /* spinner/processing state, errors */
