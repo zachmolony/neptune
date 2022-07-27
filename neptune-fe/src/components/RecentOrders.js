@@ -6,24 +6,6 @@ const RecentOrders = () => {
   const { orders } = useOrders();
   console.log("orders", orders);
 
-  const customers = [
-    {
-      id: "3411",
-      url: "/store/orders",
-      name: "Mae Jemison",
-      location: "Decatur, USA",
-      orders: 20,
-      amountSpent: "$2,400"
-    },
-    {
-      id: "2561",
-      url: "/store/orders",
-      name: "Ellen Ochoa",
-      location: "Los Angeles, USA",
-      orders: 30,
-      amountSpent: "$140"
-    }
-  ];
   const resourceName = {
     singular: "order",
     plural: "orders"
@@ -53,7 +35,7 @@ const RecentOrders = () => {
   return (
     <IndexTable
       resourceName={resourceName}
-      itemCount={customers.length}
+      itemCount={orders.length}
       selectedItemsCount={
         allResourcesSelected ? "All" : selectedResources.length
       }
