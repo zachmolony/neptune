@@ -14,12 +14,12 @@ import Footer from "../components/Footer";
 
 const content = {
   build: {
-    headline: "Launch websites that earn  ",
+    headline: "Launch websites that generate  ",
     highlighted: "passive income",
     img: Rocketship,
     alt: "Rocket ship",
     subtitle:
-      "Neptune helps you scale client websites with increacing user bases."
+      "Everything your client needs to build and manage their business - while earning you revenue."
   },
   performance: {
     headline: "Fees that work for both your client, and ",
@@ -27,7 +27,7 @@ const content = {
     img: Performance,
     alt: "Performance Graph",
     subtitle:
-      "Neptune’s application-based fee model enables you to charge fees that scale with usage. "
+      "Neptune’s micro-commission model enables you to charge fees on each transaction on your client's site. "
   },
   tools: {
     headline: "Manage multiple clients from the ",
@@ -35,7 +35,7 @@ const content = {
     img: Tools,
     alt: "Tools",
     subtitle:
-      "Neptune’s developer interface makes it easy to manage multiple client platforms."
+      "Neptune’s developer interface makes it easy to manage multiple client platforms at a time."
   }
 };
 

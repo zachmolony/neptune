@@ -26,7 +26,7 @@ const SalesContent = ({
         <h1 className="text-6xl font-bold mb-33">
           {headline} <span className="text-primary">{highlighted}</span>.
         </h1>
-        <h2 className="text-2xl text-lightGray">{subtitle}</h2>
+        <h2 className="text-2xl text-lightGray py-2">{subtitle}</h2>
       </div>
 
       {flipped && (
