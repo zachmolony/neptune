@@ -7,10 +7,13 @@ import "./App.css";
 // Make sure to call loadStripe outside of a component’s render to avoid
 // recreating the Stripe object on every render.
 // This is your test publishable API key.
-const stripePromise = loadStripe("pk_test_9xvq93nGHz35YvMaJQBkr2R3", {
-  betas: ["process_order_beta_1"],
-  apiVersion: "2018-08-23; orders_beta=v4"
-});
+const stripePromise = loadStripe(
+  "pk_test_51LQCiYJUYwAUydjjCeZhuWZAN9qCLy9QhZQpXN7J1AJnrQNt5z13yxBQXFaMk9gr4inx5AytSnqnQLAENuLcbbx800ZJ9quFs9",
+  {
+    betas: ["process_order_beta_1"],
+    apiVersion: "2018-08-23; orders_beta=v4"
+  }
+);
 
 export default function OrderStatusPage() {
   return (
