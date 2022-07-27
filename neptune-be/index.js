@@ -2,16 +2,27 @@ const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 // This is your test secret API key.
-const stripe = require("stripe")("sk_test_7HobkYqAO6exIj2b4PO25KUN", {
-  apiVersion: "2018-08-23; orders_beta=v4"
-});
-const { fetchOrders } = require("./storeowner.js");
+const stripe = require("stripe")(
+  "sk_test_51LQCiYJUYwAUydjjk4Trzq481c5ZEbXTZdhSpHxm48ngZf1yy0MbbShIFrGwW7l0xqsidySBVlC2hng42AFWTgQl00ZtCftApQ",
+  { apiVersion: "2020-08-27; orders_beta=v4;" }
+);
+
+// const { fetchOrders } = require("./storeowner.js");
+
+const developerId = "acct_1LQCioHAVsqmY1Os";
 
 const app = express();
 const port = 4242;
 
 app.use(express.static("public"));
 app.use(cors());
+
+const calculateDeveloperFee = (lineItems) => {
+  const total = lineItems.reduce((acc, item) => {
+    return acc + item.price_data.unit_amount * item.quantity;
+  }, 0);
+  return Math.round(total * 0.05);
+};
 
 const getProducts = async () => {
   const products = await stripe.products.list({
@@ -76,10 +87,23 @@ app.post("/create-order", bodyParser.json(), async (req, res) => {
     return res.status(400).send({ error: e.message });
   }
 
-  const order = await stripe.orders.create({
-    currency: "gbp",
-    line_items: lineItems
-  });
+  const developerFee = calculateDeveloperFee(lineItems);
+
+  const order = await stripe.orders.create(
+    {
+      currency: "gbp",
+      line_items: lineItems,
+      payment: {
+        settings: {
+          payment_method_types: ["card"],
+          application_fee_amount: developerFee
+        }
+      }
+    },
+    {
+      stripeAccount: developerId
+    }
+  );
 
   res.send({
     clientSecret: order.client_secret
@@ -96,6 +120,15 @@ app.get("/products", async (req, res) => {
 
 // Orders
 
-app.get("/orders", fetchOrders);
+app.get("/orders", async (req, res) => {
+  const orders = await stripe.orders.list({
+    limit: 20
+  });
+
+  const completedOrders = orders.data.filter(
+    (order) => order.status === "complete"
+  );
+  res.send(completedOrders);
+});
 
 app.listen(port, () => console.log(`"Node server listening on port ${port}!"`));
