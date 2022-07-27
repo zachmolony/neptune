@@ -6,7 +6,7 @@ const ProductsContext = createContext({});
 const useProducts = () => {
   const context = useContext(ProductsContext);
   if (context === undefined) {
-    throw new Error("useCount must be used within a CountProvider");
+    throw new Error("useProducts must be used within a CountProvider");
   }
   return context;
 };

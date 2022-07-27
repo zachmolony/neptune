@@ -1,11 +1,15 @@
 import React from "react";
 import { IndexTable, TextStyle, useIndexResourceState } from "@shopify/polaris";
+import { useOrders } from "../context/orders";
 
 const RecentOrders = () => {
+  const { orders } = useOrders();
+  console.log("orders", orders);
+
   const customers = [
     {
       id: "3411",
-      url: "customers/341",
+      url: "/store/orders",
       name: "Mae Jemison",
       location: "Decatur, USA",
       orders: 20,
@@ -13,7 +17,7 @@ const RecentOrders = () => {
     },
     {
       id: "2561",
-      url: "customers/256",
+      url: "/store/orders",
       name: "Ellen Ochoa",
       location: "Los Angeles, USA",
       orders: 30,
@@ -21,15 +25,15 @@ const RecentOrders = () => {
     }
   ];
   const resourceName = {
-    singular: "customer",
-    plural: "customers"
+    singular: "order",
+    plural: "orders"
   };
 
   const { selectedResources, allResourcesSelected, handleSelectionChange } =
-    useIndexResourceState(customers);
+    useIndexResourceState(orders);
 
-  const rowMarkup = customers.map(
-    ({ id, name, location, orders, amountSpent }, index) => (
+  const rowMarkup = orders.map(
+    ({ id, name, address, items, amount_spent }, index) => (
       <IndexTable.Row
         id={id}
         key={id}
@@ -39,9 +43,9 @@ const RecentOrders = () => {
         <IndexTable.Cell>
           <TextStyle variation="strong">{name}</TextStyle>
         </IndexTable.Cell>
-        <IndexTable.Cell>{location}</IndexTable.Cell>
-        <IndexTable.Cell>{orders}</IndexTable.Cell>
-        <IndexTable.Cell>{amountSpent}</IndexTable.Cell>
+        <IndexTable.Cell>{address}</IndexTable.Cell>
+        <IndexTable.Cell>{items}</IndexTable.Cell>
+        <IndexTable.Cell>{amount_spent}</IndexTable.Cell>
       </IndexTable.Row>
     )
   );
@@ -57,7 +61,7 @@ const RecentOrders = () => {
       headings={[
         { title: "Name" },
         { title: "Location" },
-        { title: "Order count" },
+        { title: "Items" },
         { title: "Amount spent" }
       ]}
     >
