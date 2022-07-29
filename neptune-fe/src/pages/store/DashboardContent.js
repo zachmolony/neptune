@@ -1,10 +1,12 @@
-import { Page, Layout, Card, TextStyle, ResourceList, Thumbnail, Spinner } from "@shopify/polaris";
+import { Page, Layout } from "@shopify/polaris";
 import React from "react";
 import CardWrapper from "../../components/CardWrapper";
 import Divider from "../../components/Divider";
 import RecentOrders from "../../components/RecentOrders";
 import Drops from "../../components/Drops.js";
 import MySiteContent from "../../components/MySiteContent.js";
+
+import Loading from "../../components/atoms/Loading";
 
 import SalesGraph from "../../assets/salesGraph.png";
 import { useProducts } from "../../context/products";
@@ -25,13 +27,7 @@ const DashboardContent = () => {
       <Layout>
         <Layout.Section>
           <CardWrapper title="Recent Orders">
-            {orders ? (
-              <RecentOrders orders={orders} />
-            ) : (
-              <div className="w-full flex justify-center py-24">
-                <Spinner />
-              </div>
-            )}
+            {orders ? <RecentOrders orders={orders} /> : <Loading />}
           </CardWrapper>
         </Layout.Section>
 
@@ -44,13 +40,7 @@ const DashboardContent = () => {
             innerTitle="This Friday"
             actions={[{ content: "Manage" }]}
           >
-            {products ? (
-              <Drops products={products} />
-            ) : (
-              <div className="w-full flex justify-center py-24">
-                <Spinner />
-              </div>
-            )}
+            {products ? <Drops products={products} /> : <Loading />}
           </CardWrapper>
           <CardWrapper title="Sales">
             <div className="p-3">

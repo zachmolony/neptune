@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import Button from "./components/Button.js";
+import Button from "./atoms/Button.js";
 import { Card as PolarisCard } from "@shopify/polaris";
 
 const CardWrapper = ({ children, title, innerTitle, actions, buttonTitle }) => {

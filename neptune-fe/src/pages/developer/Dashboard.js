@@ -9,6 +9,7 @@ import ClientList from "../../components/ClientList.js";
 
 const DashboardContent = () => {
   const { fees } = useDeveloper();
+  const { clients } = useDeveloper();
   return (
     <div className="px-16 py-8 w-full h-full text-darkGray">
       <Page fullWidth>
@@ -19,14 +20,14 @@ const DashboardContent = () => {
         <Layout>
           <Layout.Section>
             <CardWrapper title="Clients" buttonTitle={"Add Client"}>
-              <ClientList />
+              {clients ? <ClientList clients={clients} /> : <></>}
             </CardWrapper>
           </Layout.Section>
 
           <Layout.Section secondary>
             <CardWrapper title="Collected Fees" innerTitle="Total Fees">
               <Card.Section>
-                <h3 className="text-2xl text-primary">£{fees / 100}.00</h3>
+                {<h3 className="text-2xl text-primary">£{fees / 100}.00</h3>}
               </Card.Section>
             </CardWrapper>
             <CardWrapper title="Client Messages">
