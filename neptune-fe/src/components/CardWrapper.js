@@ -1,11 +1,14 @@
 import PropTypes from "prop-types";
-
+import Button from "./components/Button.js";
 import { Card as PolarisCard } from "@shopify/polaris";
 
-const CardWrapper = ({ children, title, innerTitle, actions }) => {
+const CardWrapper = ({ children, title, innerTitle, actions, buttonTitle }) => {
   return (
     <>
-      <h1 className="text-2xl">{title}</h1>
+      <div className="flex justify-between">
+        <h1 className="text-2xl">{title}</h1>
+        {buttonTitle && <Button title={buttonTitle} />}
+      </div>
       <div className="py-2 h-full">
         <PolarisCard title={innerTitle} actions={actions}>
           {children}
@@ -17,7 +20,7 @@ const CardWrapper = ({ children, title, innerTitle, actions }) => {
 
 CardWrapper.propTypes = {
   children: PropTypes.node,
-  title: PropTypes.string.isRequired
+  title: PropTypes.string.isRequired,
 };
 
 export default CardWrapper;

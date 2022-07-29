@@ -4,6 +4,7 @@ import "./App.css";
 import { Outlet } from "react-router";
 import { ProductsProvider } from "./context/products";
 import { OrdersProvider } from "./context/orders";
+import { DeveloperProvider } from "./context/developer";
 
 export default function App() {
   return (
@@ -17,7 +18,9 @@ export default function App() {
       <div className="w-4/5 h-full overflow-scroll">
         <ProductsProvider>
           <OrdersProvider>
-            <Outlet />
+            <DeveloperProvider>
+              <Outlet />
+            </DeveloperProvider>
           </OrdersProvider>
         </ProductsProvider>
       </div>
