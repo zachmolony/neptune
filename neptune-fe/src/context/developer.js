@@ -1,5 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import axios from "axios";
+import OuterLimitsLogo from "../assets/outerlimitslogo.png";
+import DramaCallLogo from "../assets/dramacalllogo.png";
 
 const DeveloperContext = createContext({});
 
@@ -16,12 +18,21 @@ const DeveloperProvider = ({ children }) => {
   const [clients, setClients] = useState([
     {
       id: "101",
-      name: "Outer Limits",
-      link: "www.outerlimits.wtf",
-      logo: "https://picsum.photos/200/300",
+      name: "Outer Limits Studios",
+      link: "http://outerlimits.wtf",
+      logo: OuterLimitsLogo,
       feeRate: 4.8,
-      monthly: 0,
-      feesCollected: 0,
+      monthly: 2347.11,
+      feesCollected: 105.62,
+    },
+    {
+      id: "102",
+      name: "Drama Call Clothing ",
+      link: "http://dramacall.com",
+      logo: DramaCallLogo,
+      feeRate: 2.3,
+      monthly: 3852.36,
+      feesCollected: 50.73,
     },
   ]);
 

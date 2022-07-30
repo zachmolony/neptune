@@ -8,35 +8,32 @@ import { useDeveloper } from "../../context/developer.js";
 import ClientList from "../../components/ClientList.js";
 
 const DashboardContent = () => {
-  const { fees } = useDeveloper();
-  const { clients } = useDeveloper();
+  const { fees, clients } = useDeveloper();
   return (
-    <div className="px-16 py-8 w-full h-full text-darkGray">
-      <Page fullWidth>
-        <div className="py-4">
-          <h1 className="w-full pb-4 text-3xl font-bold">Dashboard</h1>
-          <Divider />
-        </div>
-        <Layout>
-          <Layout.Section>
-            <CardWrapper title="Clients" buttonTitle={"Add Client"}>
-              {clients ? <ClientList clients={clients} /> : <></>}
-            </CardWrapper>
-          </Layout.Section>
+    <Page fullWidth>
+      <div className="py-4">
+        <h1 className="w-full pb-4 text-3xl font-bold">Dashboard</h1>
+        <Divider />
+      </div>
+      <Layout>
+        <Layout.Section>
+          <CardWrapper title="Clients" buttonTitle={"Add Client"}>
+            {clients ? <ClientList clients={clients} /> : <></>}
+          </CardWrapper>
+        </Layout.Section>
 
-          <Layout.Section secondary>
-            <CardWrapper title="Collected Fees" innerTitle="Total Fees">
-              <Card.Section>
-                {<h3 className="text-2xl text-primary">£{fees / 100}.00</h3>}
-              </Card.Section>
-            </CardWrapper>
-            <CardWrapper title="Client Messages">
-              <div className="p-3"></div>
-            </CardWrapper>
-          </Layout.Section>
-        </Layout>
-      </Page>
-    </div>
+        <Layout.Section secondary>
+          <CardWrapper title="Collected Fees" innerTitle="Total Fees">
+            <Card.Section>
+              {<h3 className="text-2xl text-primary">£{fees / 100}.00</h3>}
+            </Card.Section>
+          </CardWrapper>
+          <CardWrapper title="Client Messages">
+            <div className="p-3"></div>
+          </CardWrapper>
+        </Layout.Section>
+      </Layout>
+    </Page>
   );
 };
 
