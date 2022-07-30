@@ -15,7 +15,7 @@ const stripePromise = loadStripe(
   {
     betas: ["process_order_beta_1"],
     apiVersion: "2020-08-27; orders_beta=v4",
-    stripeAccount: "acct_1LQCioHAVsqmY1Os"
+    stripeAccount: "acct_1LQCioHAVsqmY1Os",
   }
 );
 
@@ -26,9 +26,9 @@ export default function CheckoutPage() {
   useEffect(() => {
     if (state && state.length > 0) {
       console.log(state);
-      const items = state.map((item) => ({
+      const items = state?.map((item) => ({
         product: item.id,
-        quantity: item.quantity
+        quantity: item.quantity,
       }));
 
       console.log(items);
@@ -37,7 +37,7 @@ export default function CheckoutPage() {
       fetch("http://localhost:4242/create-order", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ items: items })
+        body: JSON.stringify({ items: items }),
       })
         .then((res) => res.json())
         .then((data) => setClientSecret(data.clientSecret));
@@ -49,35 +49,35 @@ export default function CheckoutPage() {
     variables: {
       fontFamily: "Common Pixel",
       fontLineHeight: "1.5",
-      borderRadius: "0"
+      borderRadius: "0",
     },
     rules: {
       ".Input": {
-        backgroundColor: "#f3f3f3"
+        backgroundColor: "#f3f3f3",
       },
       ".Input--invalid": {
-        color: "#DF1B41"
+        color: "#DF1B41",
       },
       ".Tab, .Block": {
         boxShadow:
-          "inset -1px -1px #0a0a0a, inset 1px 1px #ffffff, inset -2px -2px #808080, inset 2px 2px #dfdfdf"
+          "inset -1px -1px #0a0a0a, inset 1px 1px #ffffff, inset -2px -2px #808080, inset 2px 2px #dfdfdf",
       },
       ".Tab:hover": {
-        backgroundColor: "#eee"
+        backgroundColor: "#eee",
       },
       ".Tab--selected, .Tab--selected:focus, .Tab--selected:hover": {
-        backgroundColor: "#ccc"
-      }
-    }
+        backgroundColor: "#ccc",
+      },
+    },
   };
   const options = {
     clientSecret,
     appearance,
     fonts: [
       {
-        cssSrc: "https://fonts.cdnfonts.com/css/common-pixel"
-      }
-    ]
+        cssSrc: "https://fonts.cdnfonts.com/css/common-pixel",
+      },
+    ],
   };
 
   return (

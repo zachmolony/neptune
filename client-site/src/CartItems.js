@@ -1,3 +1,5 @@
+import PropTypes from "prop-types";
+
 const CartItems = ({ state }) => {
   return state.map((product) => {
     return (
@@ -15,6 +17,10 @@ const CartItems = ({ state }) => {
       </div>
     );
   });
+};
+
+CartItems.propTypes = {
+  state: PropTypes.array.isRequired,
 };
 
 export default CartItems;

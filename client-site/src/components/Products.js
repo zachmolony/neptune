@@ -10,7 +10,7 @@ const Products = () => {
   };
   return (
     <>
-      <h1 className="text-3xl font-bold"></h1>
+      <h1 className="text-3xl font-bold">Products</h1>
       <div className="flex flex-col ">
         {products &&
           products.map((product) => (
