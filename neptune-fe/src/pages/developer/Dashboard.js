@@ -1,20 +1,18 @@
 import { Page, Layout, Card } from "@shopify/polaris";
 import React from "react";
 import CardWrapper from "../../components/CardWrapper";
-import Divider from "../../components/Divider";
+import PageHeading from "../../components/PageHeading";
 
-import SalesGraph from "../../assets/salesGraph.png";
 import { useDeveloper } from "../../context/developer.js";
-import ClientList from "../../components/ClientList.js";
+import ClientList from "../../components/developer/ClientList.js";
+import Loading from "../../components/atoms/Loading";
+import Fees from "../../components/developer/Fees";
 
 const DashboardContent = () => {
   const { fees, clients } = useDeveloper();
   return (
     <Page fullWidth>
-      <div className="py-4">
-        <h1 className="w-full pb-4 text-3xl font-bold">Dashboard</h1>
-        <Divider />
-      </div>
+      <PageHeading title="Dashboard" brand="Outer Limits" />
       <Layout>
         <Layout.Section>
           <CardWrapper title="Clients" buttonTitle={"Add Client"}>
@@ -24,9 +22,7 @@ const DashboardContent = () => {
 
         <Layout.Section secondary>
           <CardWrapper title="Collected Fees" innerTitle="Total Fees">
-            <Card.Section>
-              {<h3 className="text-2xl text-primary">£{fees / 100}.00</h3>}
-            </Card.Section>
+            <Card.Section>{fees ? <Fees fees={fees} /> : <Loading />}</Card.Section>
           </CardWrapper>
           <CardWrapper title="Client Messages">
             <div className="p-3"></div>

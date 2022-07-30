@@ -1,5 +1,5 @@
 import { Badge, Heading, Link } from "@shopify/polaris";
-import Logo from "../assets/outerlimitslogo.png";
+import Logo from "../../assets/outerlimitslogo.png";
 
 const MySiteContent = () => {
   return (
@@ -24,15 +24,11 @@ const MySiteContent = () => {
           </div>
         </div>
         <div className="px-4">
-          <h3 className="text-center text-xs font-semibold pb-2">
-            Visitors Today
-          </h3>
+          <h3 className="text-center text-xs font-semibold pb-2">Visitors Today</h3>
           <p className="text-4xl text-center">75</p>
         </div>
         <div className="px-4">
-          <h3 className="text-center text-xs font-semibold pb-2">
-            Active Sessions
-          </h3>
+          <h3 className="text-center text-xs font-semibold pb-2">Active Sessions</h3>
           <p className="text-4xl text-center">6</p>
         </div>
       </div>

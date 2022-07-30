@@ -22,7 +22,12 @@ const Button = ({ type, children }) => {
 };
 
 Button.propTypes = {
+  type: PropTypes.string,
   children: PropTypes.node.isRequired,
+};
+
+Button.defaultProps = {
+  type: "primary",
 };
 
 export default Button;

@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import { Badge, Heading, Link } from "@shopify/polaris";
-import Button from "./atoms/Button";
+import Button from "../atoms/Button";
 
 const ClientListItem = ({ client }) => {
   return (

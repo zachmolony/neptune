@@ -1,16 +1,15 @@
 import React from "react";
 import { Page, Layout } from "@shopify/polaris";
 import CardWrapper from "../../components/CardWrapper";
-import Divider from "../../components/Divider";
-import RecentOrders from "../../components/RecentOrders";
-import Drops from "../../components/Drops.js";
-import MySiteContent from "../../components/MySiteContent.js";
-
+import RecentOrders from "../../components/store/RecentOrders";
+import Drops from "../../components/store/Drops.js";
+import MySiteContent from "../../components/store/MySiteContent.js";
 import Loading from "../../components/atoms/Loading";
 
 import SalesGraph from "../../assets/salesGraph.png";
 import { useProducts } from "../../context/products";
 import { useOrders } from "../../context/orders";
+import PageHeading from "../../components/PageHeading";
 
 const DashboardContent = () => {
   const { products } = useProducts();
@@ -18,10 +17,7 @@ const DashboardContent = () => {
 
   return (
     <Page fullWidth>
-      <div className="py-4">
-        <h1 className="w-full pb-4 text-3xl font-bold">Outer Limits' Webstore</h1>
-        <Divider />
-      </div>
+      <PageHeading title="Dashboard" brand="Outer Limits" />
       <Layout>
         <Layout.Section>
           <CardWrapper title="Recent Orders">

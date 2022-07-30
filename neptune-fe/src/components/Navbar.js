@@ -10,18 +10,18 @@ const navlinks = {
     orders: "Orders",
     inventory: "Inventory",
     manage: "Manage Store",
-    discounts: "Discounts"
+    discounts: "Discounts",
   },
   developer: {
     dashboard: "Dashboard",
-    clients: "Clients"
-  }
+    clients: "Clients",
+  },
 };
 
 const Navbar = () => {
   const location = useLocation().pathname?.split("/")[1];
   const linkitems = Object.keys(navlinks[location])?.map((link) => (
-    <NavItem name={navlinks[location][link]} link={link} />
+    <NavItem key={link} name={navlinks[location][link]} link={link} />
   ));
   return (
     <div className="h-full bg-secondary text-white">
@@ -30,15 +30,13 @@ const Navbar = () => {
           <img src={Logo} alt="Neptune Logo" />
         </Link>
       </div>
-      <ul className="text-right text-lightGray text-2xl font-medium">
-        {linkitems}
-      </ul>
+      <ul className="text-right text-lightGray text-2xl font-medium">{linkitems}</ul>
     </div>
   );
 };
 
 Navbar.propTypes = {
-  target: PropTypes.string
+  target: PropTypes.string,
 };
 
 export default Navbar;
