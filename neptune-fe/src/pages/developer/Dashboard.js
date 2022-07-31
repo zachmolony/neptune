@@ -7,9 +7,10 @@ import { useDeveloper } from "../../context/developer.js";
 import ClientList from "../../components/developer/ClientList.js";
 import Loading from "../../components/atoms/Loading";
 import Fees from "../../components/developer/Fees";
+import ClientMessages from "../../components/developer/ClientMessages.js";
 
 const DashboardContent = () => {
-  const { fees, clients } = useDeveloper();
+  const { fees, clients, messages } = useDeveloper();
   return (
     <Page fullWidth>
       <PageHeading title="Dashboard" brand="Outer Limits" />
@@ -25,7 +26,7 @@ const DashboardContent = () => {
             <Card.Section>{fees ? <Fees fees={fees} /> : <Loading />}</Card.Section>
           </CardWrapper>
           <CardWrapper title="Client Messages">
-            <div className="p-3"></div>
+            {messages ? <ClientMessages messages={messages} /> : <Loading />}
           </CardWrapper>
         </Layout.Section>
       </Layout>

@@ -2,6 +2,8 @@ import { createContext, useContext, useEffect, useState } from "react";
 import axios from "axios";
 import OuterLimitsLogo from "../assets/outerlimitslogo.png";
 import DramaCallLogo from "../assets/dramacalllogo.png";
+import Avatar from "../assets/avatar.png";
+import ProfilePic from "../assets/profile_pic.png";
 
 const DeveloperContext = createContext({});
 
@@ -35,6 +37,24 @@ const DeveloperProvider = ({ children }) => {
       feesCollected: 50.73,
     },
   ]);
+  const [messages, setMessages] = useState([
+    {
+      id: "101",
+      name: "Wade Warren",
+      client: "Outer Limits Studios",
+      message: "Hey! The new site design looks sick! Nice job bro.",
+      date: "2020-03-22",
+      avatar: ProfilePic,
+    },
+    {
+      id: "102",
+      name: "Sam Sterland",
+      client: "Drama Call Clothing",
+      message: "hey, could you update the cart icon?",
+      date: "2020-02-13",
+      avatar: Avatar,
+    },
+  ]);
 
   useEffect(() => {
     const getFees = async () => {
@@ -55,6 +75,7 @@ const DeveloperProvider = ({ children }) => {
   const contextValue = {
     fees,
     clients,
+    messages,
   };
   return <DeveloperContext.Provider value={contextValue}>{children}</DeveloperContext.Provider>;
 };

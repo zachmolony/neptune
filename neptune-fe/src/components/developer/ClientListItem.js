@@ -4,7 +4,7 @@ import Button from "../atoms/Button";
 
 const ClientListItem = ({ client }) => {
   return (
-    <div className="py-4">
+    <div className="pt-4 pb-3" style={{ boxShadow: "0px 1px 0px #E1E3E5" }}>
       <div className="flex items-start justify-between">
         <div className="flex items-center w-3/5">
           <div>
