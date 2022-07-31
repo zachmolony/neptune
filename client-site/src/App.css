@@ -6,8 +6,7 @@
   font-family: "Common Pixel";
   font-style: normal;
   font-weight: 400;
-  src: local("Common Pixel"),
-    url("https://fonts.cdnfonts.com/s/7553/COMMP___.woff") format("woff");
+  src: local("Common Pixel"), url("https://fonts.cdnfonts.com/s/7553/COMMP___.woff") format("woff");
 }
 
 #root {
@@ -30,10 +29,20 @@ form {
   width: 30vw;
   min-width: 500px;
   align-self: center;
-  box-shadow: 0px 0px 0px 0.5px rgba(50, 50, 93, 0.1),
-    0px 2px 5px 0px rgba(50, 50, 93, 0.1), 0px 1px 1.5px 0px rgba(0, 0, 0, 0.07);
-  border-radius: 7px;
-  padding: 40px;
+}
+
+input {
+  background-color: #f3f3f3;
+}
+
+.tab:hover {
+  background-color: #eee;
+}
+
+.tab--selected,
+.tab--selected:focus,
+.tab--selected:hover {
+  background-color: #ccc;
 }
 
 #payment-message {
@@ -46,30 +55,6 @@ form {
 
 #payment-element {
   margin-bottom: 24px;
-}
-
-/* Buttons and links */
-button {
-  background: #5469d4;
-  font-family: Common Pixel, sans-serif;
-  color: #ffffff;
-  border-radius: 4px;
-  border: 0;
-  padding: 12px 16px;
-  font-size: 16px;
-  font-weight: 600;
-  display: block;
-  transition: all 0.2s ease;
-  box-shadow: 0px 4px 5.5px 0px rgba(0, 0, 0, 0.07);
-  width: 100%;
-}
-
-button:hover {
-  filter: contrast(115%);
-}
-
-button:disabled {
-  opacity: 0.5;
 }
 
 /* spinner/processing state, errors */

@@ -11,7 +11,8 @@ const stripePromise = loadStripe(
   "pk_test_51LQCiYJUYwAUydjjCeZhuWZAN9qCLy9QhZQpXN7J1AJnrQNt5z13yxBQXFaMk9gr4inx5AytSnqnQLAENuLcbbx800ZJ9quFs9",
   {
     betas: ["process_order_beta_1"],
-    apiVersion: "2018-08-23; orders_beta=v4"
+    apiVersion: "2018-08-23; orders_beta=v4",
+    stripeAccount: "acct_18vqfsKjjG8w6pC3",
   }
 );
 
@@ -32,9 +33,7 @@ function OrderStatus() {
         return;
       }
 
-      const clientSecret = new URLSearchParams(window.location.search).get(
-        "order_client_secret"
-      );
+      const clientSecret = new URLSearchParams(window.location.search).get("order_client_secret");
 
       stripe.retrieveOrder(clientSecret).then(({ order }) => {
         switch (order.payment.payment_intent.status) {
@@ -58,7 +57,15 @@ function OrderStatus() {
   return (
     <>
       {/* Show any error or success messages */}
-      {message && <div id="payment-message">{message}</div>}
+      {message && (
+        <div
+          id="payment-message"
+          className="mx-auto nes-container is-centered is-rounded mt-12 with-title"
+        >
+          <p className="title">Order Status</p>
+          {message}
+        </div>
+      )}
     </>
   );
 }

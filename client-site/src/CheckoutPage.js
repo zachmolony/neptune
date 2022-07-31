@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { loadStripe } from "@stripe/stripe-js";
-import { Elements, elements } from "@stripe/react-stripe-js";
+import { Elements } from "@stripe/react-stripe-js";
 
-import CheckoutForm from "./CheckoutForm";
-import "./App.css";
-import CartItems from "./CartItems";
 import { useCart } from "./context/cart";
+import CheckoutForm from "./CheckoutForm";
+import CartItems from "./CartItems";
+import "./App.css";
 
 // Make sure to call loadStripe outside of a component’s render to avoid
 // recreating the Stripe object on every render.
@@ -15,7 +15,7 @@ const stripePromise = loadStripe(
   {
     betas: ["process_order_beta_1"],
     apiVersion: "2020-08-27; orders_beta=v4",
-    stripeAccount: "acct_1LQCioHAVsqmY1Os",
+    stripeAccount: "acct_18vqfsKjjG8w6pC3",
   }
 );
 
@@ -30,8 +30,6 @@ export default function CheckoutPage() {
         product: item.id,
         quantity: item.quantity,
       }));
-
-      console.log(items);
 
       // Create Order as soon as the page loads
       fetch("http://localhost:4242/create-order", {
@@ -48,7 +46,6 @@ export default function CheckoutPage() {
     theme: "none",
     variables: {
       fontFamily: "Common Pixel",
-      fontLineHeight: "1.5",
       borderRadius: "0",
     },
     rules: {
@@ -57,10 +54,6 @@ export default function CheckoutPage() {
       },
       ".Input--invalid": {
         color: "#DF1B41",
-      },
-      ".Tab, .Block": {
-        boxShadow:
-          "inset -1px -1px #0a0a0a, inset 1px 1px #ffffff, inset -2px -2px #808080, inset 2px 2px #dfdfdf",
       },
       ".Tab:hover": {
         backgroundColor: "#eee",
@@ -81,8 +74,48 @@ export default function CheckoutPage() {
   };
 
   return (
-    <div className="App">
-      {state ? <CartItems state={state} /> : ""}
+    <div className="mx-auto">
+      {state ? (
+        <form className="nes-container with-title is-centered mx-auto mt-8">
+          <p className="title">Items</p>
+          <CartItems state={state} />
+        </form>
+      ) : (
+        ""
+      )}
+      <form className="nes-container with-title is-centered mx-auto mt-8">
+        <h1 className="title">Shipping Details</h1>
+        <p>
+          <label htmlFor="name" className="float-left mb-0 mt-2">
+            Name
+          </label>
+          <input type="text" id="name" className="w-full h-8" />
+        </p>
+        <p>
+          <label htmlFor="email" className="float-left mb-0 mt-2">
+            Email
+          </label>
+          <input type="email" id="email" className="w-full h-8" />
+        </p>
+        <p>
+          <label htmlFor="address" className="float-left mb-0 mt-2">
+            Address
+          </label>
+          <input type="text" id="address" className="w-full h-8" />
+        </p>
+        <p>
+          <label htmlFor="city" className="float-left mb-0 mt-2">
+            City
+          </label>
+          <input type="text" id="city" className="w-full h-8" />
+        </p>
+        <p>
+          <label htmlFor="postcode" className="float-left mb-0 mt-2">
+            Postcode
+          </label>
+          <input type="text" id="postcode" className="w-full h-8" />
+        </p>
+      </form>
       {clientSecret && (
         <Elements options={options} stripe={stripePromise}>
           <CheckoutForm />

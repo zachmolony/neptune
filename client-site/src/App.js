@@ -4,7 +4,7 @@ import { CartProvider } from "./context/cart.js";
 
 import BagIcon from "./assets/bag_icon.jpeg";
 import MenuIcon from "./assets/menu_icon.webp";
-import Logo from "./assets/outerlimitslogo.png";
+import Logo from "./assets/hands_pixels.png";
 
 import "./App.css";
 
@@ -17,18 +17,14 @@ function App() {
           <div className="container w-screen h-screen">
             <div className="flex w-2/5 h-32 mx-auto pt-8 justify-between">
               <div className="h-full">
-                <img
-                  src={MenuIcon}
-                  alt=""
-                  className="object-contain h-full py-6"
-                />
+                <img src={MenuIcon} alt="" className="object-contain h-full py-6 nes-pointer" />
               </div>
               <div className="h-full">
                 <img
                   src={Logo}
                   alt=""
                   onClick={() => navigate("/products")}
-                  className="object-contain h-full pl-4"
+                  className="object-contain h-full nes-pointer"
                 />
               </div>
               <div className="h-full">
@@ -36,12 +32,12 @@ function App() {
                   src={BagIcon}
                   alt=""
                   onClick={() => navigate("/cart")}
-                  className="object-contain h-full py-4"
+                  className="object-contain h-full py-4 nes-pointer"
                 />
               </div>
             </div>
 
-            <div className="w-1/2 mx-auto text-center">
+            <div className="w-5/12 my-6 mx-auto text-center">
               <Outlet />
             </div>
           </div>
