@@ -9,7 +9,7 @@ const stripe = require("stripe")(
 
 // const { fetchOrders } = require("./storeowner.js");
 
-const developerId = "acct_1LQCioHAVsqmY1Os";
+const developerId = "acct_18vqfsKjjG8w6pC3";
 
 const app = express();
 const port = 4242;
@@ -25,15 +25,22 @@ const calculateDeveloperFee = (lineItems) => {
 };
 
 const getProducts = async () => {
-  const products = await stripe.products.list({
-    limit: 20,
-    active: true
-  });
+  const products = await stripe.products.list(
+    {
+      limit: 20,
+      active: true,
+    },
+    {
+      stripeAccount: developerId,
+    }
+  );
   return products.data;
 };
 
 const fetchPrice = async (priceId) => {
-  return await stripe.prices.retrieve(priceId);
+  return await stripe.prices.retrieve(priceId, {
+    stripeAccount: developerId,
+  });
 };
 
 const populateProductsPriceData = async (lineItems) => {
@@ -48,9 +55,7 @@ const populateProductsPriceData = async (lineItems) => {
 
 // Generate line items using existing product information.
 const generateLineItems = async (items) => {
-  const products = await getProducts().then((products) =>
-    populateProductsPriceData(products)
-  );
+  const products = await getProducts().then((products) => populateProductsPriceData(products));
   console.log("products", products);
   console.log("items", items);
 
@@ -65,12 +70,12 @@ const generateLineItems = async (items) => {
     return {
       product_data: {
         id: item.product,
-        name: product.name
+        name: product.name,
       },
       price_data: {
-        unit_amount: product.price.unit_amount
+        unit_amount: product.price.unit_amount,
       },
-      quantity: item.quantity
+      quantity: item.quantity,
     };
   });
 };
@@ -93,20 +98,40 @@ app.post("/create-order", bodyParser.json(), async (req, res) => {
     {
       currency: "gbp",
       line_items: lineItems,
+      shipping_cost: { shipping_rate: "shr_1KksGwKjjG8w6pC39WekF6sQ" },
+      shipping_details: {
+        name: "Zach Molony",
+        address: {
+          line1: "Flat 3, 224 Tooting High Street, Tooting",
+          postal_code: "SW17 0SG",
+          city: "London",
+          country: "GB",
+        },
+      },
+      billing_details: {
+        name: "Zach Molony",
+        address: {
+          line1: "Flat 3, 224 Tooting High Street, Tooting",
+          postal_code: "SW17 0SG",
+          city: "London",
+          country: "GB",
+        },
+        email: "zach.molony@gmail.com",
+      },
       payment: {
         settings: {
           payment_method_types: ["card"],
-          application_fee_amount: developerFee
-        }
-      }
+          application_fee_amount: developerFee,
+        },
+      },
     },
     {
-      stripeAccount: developerId
+      stripeAccount: developerId,
     }
   );
 
   res.send({
-    clientSecret: order.client_secret
+    clientSecret: order.client_secret,
   });
 });
 
@@ -121,14 +146,25 @@ app.get("/products", async (req, res) => {
 // Orders
 
 app.get("/orders", async (req, res) => {
-  const orders = await stripe.orders.list({
-    limit: 20
+  const orders = await stripe.orders.list(
+    {
+      limit: 20,
+    },
+    { stripeAccount: developerId }
+  );
+
+  const completedOrders = orders.data.filter((order) => order.status === "complete");
+  res.send(completedOrders);
+});
+
+// Fees
+
+app.get("/fees", async (req, res) => {
+  const applicationFees = await stripe.applicationFees.list({
+    limit: 10,
   });
 
-  const completedOrders = orders.data.filter(
-    (order) => order.status === "complete"
-  );
-  res.send(completedOrders);
+  res.send(applicationFees.data);
 });
 
 app.listen(port, () => console.log(`"Node server listening on port ${port}!"`));
