@@ -147,8 +147,15 @@ app.get("/products", async (req, res) => {
 
 // Orders
 
+const getProductById = async (id) => {
+  const productData = await stripe.products.retrieve(id, {
+    stripeAccount: developerId,
+  });
+  console.log("productData:", productData);
+  return productData;
+};
+
 const getOrderLineItems = async (orderId) => {
-  console.log(`orders/${orderId}/line_items`, orderId);
   const resource = Stripe.StripeResource.extend({
     request: Stripe.StripeResource.method({
       method: "GET",
@@ -167,11 +174,22 @@ const getOrderLineItems = async (orderId) => {
   return await lineItems;
 };
 
+const populateLineItems = async (lineItems) => {
+  return await Promise.all(
+    lineItems.map(async (lineItem) => {
+      const product = await getProductById(lineItem.product);
+      lineItem.product = product;
+      return lineItem;
+    })
+  );
+};
+
 const populateOrderLineItems = async (completedOrders) => {
   return await Promise.all(
     completedOrders.map(async (order) => {
       const lineItems = await getOrderLineItems(order.id);
-      order.line_items = lineItems.data;
+      order.line_items = await populateLineItems(lineItems.data);
+      console.log("order:", order);
       return order;
     })
   );
@@ -189,8 +207,23 @@ app.get("/orders", async (req, res) => {
     orders.data.filter((order) => order.status === "complete")
   );
 
-  console.log("Completed orders:", populatedOrders);
   res.send(populatedOrders);
+});
+
+// mark order as shipped
+
+app.post("/orders/mark_as_shipped", async (req, res) => {
+  const { orderId } = req.query;
+  const order = await stripe.orders.update(
+    orderId,
+    {
+      metadata: {
+        shipping_status: "shipped",
+      },
+    },
+    { stripeAccount: developerId }
+  );
+  res.send(order);
 });
 
 // get order items
