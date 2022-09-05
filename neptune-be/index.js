@@ -2,7 +2,8 @@ const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 // This is your test secret API key.
-const stripe = require("stripe")(
+const Stripe = require("stripe");
+const stripe = Stripe(
   "sk_test_51LQCiYJUYwAUydjjk4Trzq481c5ZEbXTZdhSpHxm48ngZf1yy0MbbShIFrGwW7l0xqsidySBVlC2hng42AFWTgQl00ZtCftApQ",
   { apiVersion: "2020-08-27; orders_beta=v4;" }
 );
@@ -20,7 +21,7 @@ app.use(cors());
 const calculateDeveloperFee = (lineItems) => {
   const total = lineItems.reduce((acc, item) => {
     return acc + item.price_data.unit_amount * item.quantity;
-  }, 0);
+  }, 500);
   return Math.round(total * 0.05);
 };
 
@@ -56,8 +57,6 @@ const populateProductsPriceData = async (lineItems) => {
 // Generate line items using existing product information.
 const generateLineItems = async (items) => {
   const products = await getProducts().then((products) => populateProductsPriceData(products));
-  console.log("products", products);
-  console.log("items", items);
 
   return items.map((item) => {
     // Add any logic needed to validate product IDs and
@@ -86,7 +85,6 @@ app.post("/create-order", bodyParser.json(), async (req, res) => {
   let lineItems;
   try {
     lineItems = await generateLineItems(items);
-    console.log("lineItems", lineItems);
   } catch (e) {
     console.log("Error generating line items:", e);
     return res.status(400).send({ error: e.message });
@@ -118,6 +116,10 @@ app.post("/create-order", bodyParser.json(), async (req, res) => {
         },
         email: "zach.molony@gmail.com",
       },
+      metadata: {
+        developer_fee: developerFee,
+        shipping_status: "unshipped",
+      },
       payment: {
         settings: {
           payment_method_types: ["card"],
@@ -145,6 +147,36 @@ app.get("/products", async (req, res) => {
 
 // Orders
 
+const getOrderLineItems = async (orderId) => {
+  console.log(`orders/${orderId}/line_items`, orderId);
+  const resource = Stripe.StripeResource.extend({
+    request: Stripe.StripeResource.method({
+      method: "GET",
+      path: `orders/${orderId}/line_items`,
+    }),
+  });
+
+  const lineItems = new resource(stripe).request(
+    {
+      limit: 3,
+    },
+    { stripeAccount: developerId }
+  );
+
+  console.log("Lineitems:", await lineItems);
+  return await lineItems;
+};
+
+const populateOrderLineItems = async (completedOrders) => {
+  return await Promise.all(
+    completedOrders.map(async (order) => {
+      const lineItems = await getOrderLineItems(order.id);
+      order.line_items = lineItems.data;
+      return order;
+    })
+  );
+};
+
 app.get("/orders", async (req, res) => {
   const orders = await stripe.orders.list(
     {
@@ -153,8 +185,32 @@ app.get("/orders", async (req, res) => {
     { stripeAccount: developerId }
   );
 
-  const completedOrders = orders.data.filter((order) => order.status === "complete");
-  res.send(completedOrders);
+  const populatedOrders = await populateOrderLineItems(
+    orders.data.filter((order) => order.status === "complete")
+  );
+
+  console.log("Completed orders:", populatedOrders);
+  res.send(populatedOrders);
+});
+
+// get order items
+
+app.get("/order", async (req, res) => {
+  const resource = Stripe.StripeResource.extend({
+    request: Stripe.StripeResource.method({
+      method: "GET",
+      path: "orders/order_1LS2MCKjjG8w6pC3NpRoZhWv/line_items",
+    }),
+  });
+
+  const ress = new resource(stripe).request(
+    {
+      limit: 3,
+    },
+    { stripeAccount: developerId }
+  );
+
+  res.send(await ress);
 });
 
 // Fees

@@ -64,13 +64,12 @@ const DeveloperProvider = ({ children }) => {
       }).then(function (response) {
         console.log("response", response);
         const totalFees = response.data.reduce((acc, fee) => acc + fee.amount, 0);
-        console.log("totalFees", totalFees);
         setFees(totalFees);
       });
     };
 
     getFees();
-  }, []);
+  });
 
   const contextValue = {
     fees,

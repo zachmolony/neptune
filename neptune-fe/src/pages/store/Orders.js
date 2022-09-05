@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { Layout, Page } from "@shopify/polaris";
 import PageHeading from "../../components/PageHeading";
@@ -10,27 +10,48 @@ import ShippedOrders from "../../components/store/ShippedOrders";
 import SelectedOrder from "../../components/store/SelectedOrder.js";
 
 const Orders = () => {
-  const { orders } = useOrders();
-  const unshippedOrders = orders?.filter((order) => order.status === "unshipped");
-  const selectedOrder = orders?.find((order) => order.status === "inprogress");
-  const shippedOrders = orders?.filter((order) => order.status === "shipped");
+  const [selectedOrder, setSelectedOrder] = useState(null);
+  const { markOrderAsShipped, getOrderById, orders } = useOrders();
+
+  const unshippedOrders = orders?.filter(
+    (order) => order.metadata?.shipping_status === "unshipped"
+  );
+  const shippedOrders = orders?.filter((order) => order.metadata?.shipping_status === "shipped");
+
+  const selectForShipping = async (order) => {
+    const temp = await getOrderById(order[0]);
+    setSelectedOrder(temp);
+  };
+
+  const completeShipping = (value) => {
+    markOrderAsShipped(selectedOrder);
+    setSelectedOrder(null);
+  };
+
   return (
     <Page fullWidth>
       <PageHeading title="Orders" brand="Outer Limits Studios" />
       <Layout>
         <Layout.Section oneThird>
-          <CardWrapper title="Needs Shipping" buttonTitle={"Add Order"}>
-            {unshippedOrders ? <UnshippedOrders orders={unshippedOrders} /> : <Loading />}
+          <CardWrapper title="Needs Shipping">
+            {unshippedOrders ? (
+              <UnshippedOrders
+                unshippedOrders={unshippedOrders}
+                selectForShipping={selectForShipping}
+              />
+            ) : (
+              <Loading />
+            )}
           </CardWrapper>
         </Layout.Section>
         <Layout.Section oneThird>
-          <CardWrapper title="Selected" buttonTitle={"Add Order"}>
-            {selectedOrder ? <SelectedOrder orders={selectedOrder} /> : <Loading />}
+          <CardWrapper title="Selected">
+            <SelectedOrder selectedOrderData={selectedOrder} completeShipping={completeShipping} />
           </CardWrapper>
         </Layout.Section>
         <Layout.Section oneThird>
-          <CardWrapper title="Shipped" buttonTitle={"Add Order"}>
-            {shippedOrders ? <ShippedOrders orders={shippedOrders} /> : <Loading />}
+          <CardWrapper title="Shipped">
+            {shippedOrders ? <ShippedOrders shippedOrders={shippedOrders} /> : <Loading />}
           </CardWrapper>
         </Layout.Section>
       </Layout>
