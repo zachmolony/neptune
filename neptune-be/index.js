@@ -10,7 +10,7 @@ const stripe = Stripe(
 
 // const { fetchOrders } = require("./storeowner.js");
 
-const developerId = "acct_18vqfsKjjG8w6pC3";
+const clientID = "acct_18vqfsKjjG8w6pC3";
 
 const app = express();
 const port = 4242;
@@ -32,7 +32,7 @@ const getProducts = async () => {
       active: true,
     },
     {
-      stripeAccount: developerId,
+      stripeAccount: clientID,
     }
   );
   return products.data;
@@ -40,7 +40,7 @@ const getProducts = async () => {
 
 const fetchPrice = async (priceId) => {
   return await stripe.prices.retrieve(priceId, {
-    stripeAccount: developerId,
+    stripeAccount: clientID,
   });
 };
 
@@ -128,7 +128,7 @@ app.post("/create-order", bodyParser.json(), async (req, res) => {
       },
     },
     {
-      stripeAccount: developerId,
+      stripeAccount: clientID,
     }
   );
 
@@ -149,7 +149,7 @@ app.get("/products", async (req, res) => {
 
 const getProductById = async (id) => {
   const productData = await stripe.products.retrieve(id, {
-    stripeAccount: developerId,
+    stripeAccount: clientID,
   });
   console.log("productData:", productData);
   return productData;
@@ -167,7 +167,7 @@ const getOrderLineItems = async (orderId) => {
     {
       limit: 3,
     },
-    { stripeAccount: developerId }
+    { stripeAccount: clientID }
   );
 
   console.log("Lineitems:", await lineItems);
@@ -200,7 +200,7 @@ app.get("/orders", async (req, res) => {
     {
       limit: 20,
     },
-    { stripeAccount: developerId }
+    { stripeAccount: clientID }
   );
 
   const populatedOrders = await populateOrderLineItems(
@@ -221,7 +221,7 @@ app.post("/orders/mark_as_shipped", async (req, res) => {
         shipping_status: "shipped",
       },
     },
-    { stripeAccount: developerId }
+    { stripeAccount: clientID }
   );
   res.send(order);
 });
@@ -240,7 +240,7 @@ app.get("/order", async (req, res) => {
     {
       limit: 3,
     },
-    { stripeAccount: developerId }
+    { stripeAccount: clientID }
   );
 
   res.send(await ress);

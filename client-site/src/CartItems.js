@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 
-const CartItems = ({ state }) => {
-  return state.map((product) => {
+const CartItems = ({ cart }) => {
+  return cart.map((product) => {
     return (
       <div className="mx-auto flex justify-between items-center  w-11/12">
         <img src={product.images[0]} alt="" className="w-1/4" />
@@ -16,7 +16,7 @@ const CartItems = ({ state }) => {
 };
 
 CartItems.propTypes = {
-  state: PropTypes.array.isRequired,
+  cart: PropTypes.array.isRequired,
 };
 
 export default CartItems;

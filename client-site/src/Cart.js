@@ -3,16 +3,16 @@ import { useCart } from "./context/cart";
 import CartItems from "./CartItems.js";
 
 const Cart = () => {
-  const { state } = useCart();
-  console.log(state);
+  const { cart } = useCart();
+  console.log(cart);
   return (
     <>
       <div className="mx-auto">
-        {!state || state.length === 0 ? "Cart is empty" : <CartItems state={state} />}
+        {!cart || cart.length === 0 ? "Cart is empty" : <CartItems cart={cart} />}
         <div className="w-1/5 flex float-right justify-between mx-auto">
           <h2>Total</h2>
           <h3>
-            {state.reduce((acc, product) => acc + product.price.unit_amount, 0) / 100}
+            {cart.reduce((acc, product) => acc + product.price.unit_amount, 0) / 100}
             .00
           </h3>
         </div>

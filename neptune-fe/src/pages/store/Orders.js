@@ -11,12 +11,7 @@ import SelectedOrder from "../../components/store/SelectedOrder.js";
 
 const Orders = () => {
   const [selectedOrder, setSelectedOrder] = useState(null);
-  const { markOrderAsShipped, getOrderById, orders } = useOrders();
-
-  const unshippedOrders = orders?.filter(
-    (order) => order.metadata?.shipping_status === "unshipped"
-  );
-  const shippedOrders = orders?.filter((order) => order.metadata?.shipping_status === "shipped");
+  const { markOrderAsShipped, getOrderById, unshippedOrders, shippedOrders } = useOrders();
 
   const selectForShipping = async (order) => {
     const temp = await getOrderById(order[0]);

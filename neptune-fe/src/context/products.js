@@ -18,7 +18,7 @@ const ProductsProvider = ({ children }) => {
     const getProducts = () => {
       axios({
         method: "get",
-        url: "http://localhost:4242/products"
+        url: "http://localhost:4242/products",
       }).then(function (response) {
         setProducts(response.data);
       });
@@ -28,13 +28,9 @@ const ProductsProvider = ({ children }) => {
   }, []);
 
   const contextValue = {
-    products
+    products,
   };
-  return (
-    <ProductsContext.Provider value={contextValue}>
-      {children}
-    </ProductsContext.Provider>
-  );
+  return <ProductsContext.Provider value={contextValue}>{children}</ProductsContext.Provider>;
 };
 
 export { ProductsProvider, useProducts };

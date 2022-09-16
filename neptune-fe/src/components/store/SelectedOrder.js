@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import EmptyBox from "../../assets/empty-box-icon.png";
-import { Button, ResourceItem, TextStyle, Icon, Badge, Heading, Thumbnail } from "@shopify/polaris";
+import { Button, TextStyle, Icon, Badge, Heading } from "@shopify/polaris";
 import { NoteMinor, ConversationMinor } from "@shopify/polaris-icons";
 import { formatCurrency } from "../../utils/formatting";
 import dayjs from "dayjs";

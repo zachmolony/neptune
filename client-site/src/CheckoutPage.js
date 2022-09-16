@@ -21,12 +21,12 @@ const stripePromise = loadStripe(
 
 export default function CheckoutPage() {
   const [clientSecret, setClientSecret] = useState("");
-  const { state } = useCart();
+  const { cart } = useCart();
 
   useEffect(() => {
-    if (state && state.length > 0) {
-      console.log(state);
-      const items = state?.map((item) => ({
+    if (cart && cart.length > 0) {
+      console.log(cart);
+      const items = cart?.map((item) => ({
         product: item.id,
         quantity: item.quantity,
       }));
@@ -40,7 +40,7 @@ export default function CheckoutPage() {
         .then((res) => res.json())
         .then((data) => setClientSecret(data.clientSecret));
     }
-  }, []);
+  });
 
   const appearance = {
     theme: "none",
@@ -75,10 +75,10 @@ export default function CheckoutPage() {
 
   return (
     <div className="mx-auto">
-      {state ? (
+      {cart ? (
         <form className="nes-container with-title is-centered mx-auto mt-8">
           <p className="title">Items</p>
-          <CartItems state={state} />
+          <CartItems cart={cart} />
         </form>
       ) : (
         ""

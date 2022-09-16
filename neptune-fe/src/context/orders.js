@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import axios from "axios";
+import { OrdersAPI } from "../api/API_INVOKE_URLS";
 
 const OrdersContext = createContext({});
 
@@ -21,23 +22,30 @@ const OrdersProvider = ({ children }) => {
 
   const markOrderAsShipped = ({ id }) => {
     orders.map((item) => (item.id === id ? (item.metadata.shipping_status = "shipped") : item));
-    axios({
-      method: "post",
-      url: "http://localhost:4242/orders/mark_as_shipped",
-      query: id,
-    }).then(function (response) {
-      // setOrders(response.data);
-    });
+    // axios({
+    //   method: "post",
+    //   url: OrdersAPI.markOrderAsShipped,
+    //   query: id,
+    // }).then(function (response) {
+    //   setOrders(response.data);
+    // });
   };
 
   const getOrderById = (orderId) => {
     return orders.find((order) => order.id === orderId);
   };
 
+  const unshippedOrders = orders?.filter(
+    (order) => order.metadata?.shipping_status === "unshipped"
+  );
+  const shippedOrders = orders?.filter((order) => order.metadata?.shipping_status === "shipped");
+
   const contextValue = {
-    markOrderAsShipped,
-    getOrderById,
     orders,
+    unshippedOrders,
+    shippedOrders,
+    getOrderById,
+    markOrderAsShipped,
   };
   return <OrdersContext.Provider value={contextValue}>{children}</OrdersContext.Provider>;
 };
