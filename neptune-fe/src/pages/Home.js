@@ -16,6 +16,7 @@ import PageWrapper from "../components/home/PageWrapper";
 import Footer from "../components/home/Footer";
 import Features from "../components/home/Features";
 import FeaturesContent from "../components/home/FeaturesContent";
+import CodeContent from "../components/home/CodeContent";
 
 const content = {
   build: {
@@ -34,14 +35,22 @@ const content = {
     subtitle:
       "Neptune’s micro-commission model enables you to take a cut of transactions on your client's site. ",
   },
-  tools: {
-    headline: "Manage multiple clients from the ",
-    highlighted: "same place",
-    img: Tools,
-    alt: "Tools",
-    subtitle:
-      "Neptune’s developer interface makes it easy to build and manage multiple client platforms at a time.",
-  },
+  // tools: {
+  //   headline: "Manage multiple clients from the ",
+  //   highlighted: "same place",
+  //   img: Tools,
+  //   alt: "Tools",
+  //   subtitle:
+  //     "Neptune’s developer interface makes it easy to build and manage multiple client platforms at a time.",
+  // },
+};
+
+const codeContent = {
+  headline: "All the tools you need to build ",
+  highlighted: "your way",
+  img: Tools,
+  alt: "Tools",
+  subtitle: "Neptune’s developer tool kit handles all the heavy lifting, without restricting you.",
 };
 
 const features = {
@@ -110,6 +119,10 @@ const Home = () => {
           </PageWrapper>
         ))}
 
+        <PageWrapper>
+          <CodeContent {...codeContent} flipped />
+        </PageWrapper>
+
         {Object.keys(features).map((page, index) => (
           <PageWrapper>
             <FeaturesContent {...features[page]} flipped={!!(index % 2)} />
@@ -136,8 +149,7 @@ const Home = () => {
 
           <div className="w-7/12" ref={textScroll.ref}>
             <h1 className="text-6xl font-bold mb-33">
-              E-commerce development made simple.{" "}
-              <span className="text-primary">That’s Neptune.</span>
+              E-commerce made simple. <span className="text-primary">That’s Neptune.</span>
             </h1>
             <h2 className="text-2xl text-lightGray">
               Register for the Beta{" "}

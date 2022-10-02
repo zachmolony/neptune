@@ -8,12 +8,13 @@ module.exports = {
         secondary: "#4C5472",
         tertiary: "#566086",
         quaternary: "#2F3650",
+        darkPrimary: "#2E374B",
         gray: "#EEEEEE",
         lightGray: "#C1C1C1",
         darkGray: "#484848",
-        lightGreen1: "#8BE1AF"
-      }
-    }
+        lightGreen1: "#8BE1AF",
+      },
+    },
   },
-  plugins: []
+  plugins: [],
 };

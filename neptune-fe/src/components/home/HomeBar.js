@@ -26,7 +26,9 @@ const HomeBar = () => {
       <div
         className={"top-0 w-full h-28 pt-12 px-12 flex justify-between z-30 " + (fixed && " fixed")}
       >
-        <img src={TextLogo} alt="" className="h-full" />
+        <div className="drop-shadow-[0px_0px_3px_rgba(76,84,114)]">
+          <img src={TextLogo} alt="" className="h-full drop-shadow-[0px_0px_3px_rgba(76,84,114)]" />
+        </div>
         <ul className="h-full flex pt-2 drop-shadow-lg">
           <HomeBarItem title="Features" link="/" />
           <HomeBarItem title="Build" link="developer/dashboard" />
