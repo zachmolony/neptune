@@ -6,12 +6,16 @@ import NeptuneLogo from "../assets/planet.jpeg";
 import Rocketship from "../assets/rocket.jpeg";
 import Performance from "../assets/performance.jpeg";
 import Tools from "../assets/tools.jpeg";
+import DashboardImage from "../assets/ss_dashboard.png";
+import OrdersImage from "../assets/ss_orders.png";
+import DeveloperImage from "../assets/ss_developer.png";
 
 import HomeBar from "../components/home/HomeBar";
 import SalesContent from "../components/home/SalesContent";
 import PageWrapper from "../components/home/PageWrapper";
 import Footer from "../components/home/Footer";
 import Features from "../components/home/Features";
+import FeaturesContent from "../components/home/FeaturesContent";
 
 const content = {
   build: {
@@ -37,6 +41,24 @@ const content = {
     alt: "Tools",
     subtitle:
       "Neptune’s developer interface makes it easy to build and manage multiple client platforms at a time.",
+  },
+};
+
+const features = {
+  interface: {
+    headline: "Everything your client needs to ",
+    highlighted: "get selling",
+    img: [OrdersImage, DashboardImage],
+    alt: "Tools",
+    subtitle:
+      "Neptune allows your client to ship products, manage inventory, and more - all from a simple dashboard.",
+  },
+  developer: {
+    headline: "Everything you need to ",
+    highlighted: "start earning",
+    img: [DeveloperImage],
+    alt: "Tools",
+    subtitle: "Neptune allows you to manage your fees, websites, and communicate with clients.",
   },
 };
 
@@ -88,6 +110,12 @@ const Home = () => {
           </PageWrapper>
         ))}
 
+        {Object.keys(features).map((page, index) => (
+          <PageWrapper>
+            <FeaturesContent {...features[page]} flipped={!!(index % 2)} />
+          </PageWrapper>
+        ))}
+
         {false && (
           <PageWrapper>
             <Features />
@@ -95,6 +123,17 @@ const Home = () => {
         )}
 
         <PageWrapper>
+          {true && (
+            <div className="w-5/12 h-1/2 justify-center flex items-center">
+              <img
+                src={NeptuneLogo}
+                alt={"alt"}
+                ref={imageScroll.ref}
+                style={{ maxHeight: "100%" }}
+              />
+            </div>
+          )}
+
           <div className="w-7/12" ref={textScroll.ref}>
             <h1 className="text-6xl font-bold mb-33">
               E-commerce development made simple.{" "}
@@ -107,17 +146,6 @@ const Home = () => {
               </Link>
             </h2>
           </div>
-
-          {true && (
-            <div className="w-5/12 h-1/2 justify-center flex items-center">
-              <img
-                src={NeptuneLogo}
-                alt={"alt"}
-                ref={imageScroll.ref}
-                style={{ maxHeight: "100%" }}
-              />
-            </div>
-          )}
         </PageWrapper>
 
         <Footer />

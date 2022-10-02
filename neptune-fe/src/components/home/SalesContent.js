@@ -1,13 +1,6 @@
 import { useParallax } from "react-scroll-parallax";
 
-const SalesContent = ({
-  flipped,
-  headline,
-  highlighted,
-  subtitle,
-  img,
-  alt
-}) => {
+const SalesContent = ({ flipped, headline, highlighted, subtitle, img, alt }) => {
   const imageScroll = useParallax({ speed: 6 });
   const textScroll = useParallax({ speed: -10 });
   return (
@@ -31,12 +24,7 @@ const SalesContent = ({
 
       {flipped && (
         <div className="w-5/12 h-1/2 justify-center flex items-center">
-          <img
-            src={img}
-            alt={alt}
-            style={{ maxHeight: "100%" }}
-            ref={imageScroll.ref}
-          />
+          <img src={img} alt={alt} style={{ maxHeight: "100%" }} ref={imageScroll.ref} />
         </div>
       )}
     </>
