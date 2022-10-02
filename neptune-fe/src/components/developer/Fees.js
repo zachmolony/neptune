@@ -4,7 +4,7 @@ import { formatCurrency } from "../../utils/formatting";
 const Fees = ({ fees }) => {
   return (
     <>
-      <h3 className="text-2xl text-primary">{formatCurrency(fees)}</h3>
+      <h3 className="text-2xl text-primary -my-2 mb-1">{formatCurrency(fees)}</h3>
     </>
   );
 };
