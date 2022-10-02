@@ -2,7 +2,7 @@ import { useNavigate, Outlet } from "react-router-dom";
 import { ProductsProvider } from "./context/products";
 import { CartProvider } from "./context/cart.js";
 
-import BagIcon from "./assets/bag_icon.jpeg";
+import BagButton from "./components/BagButton";
 import MenuIcon from "./assets/menu_icon.webp";
 import Logo from "./assets/hands_pixels.png";
 
@@ -10,6 +10,7 @@ import "./App.css";
 
 function App() {
   const navigate = useNavigate();
+
   return (
     <>
       <ProductsProvider>
@@ -27,13 +28,8 @@ function App() {
                   className="object-contain h-full nes-pointer"
                 />
               </div>
-              <div className="h-full">
-                <img
-                  src={BagIcon}
-                  alt=""
-                  onClick={() => navigate("/cart")}
-                  className="object-contain h-full py-4 nes-pointer"
-                />
+              <div className="h-full" onClick={() => navigate("/cart")}>
+                <BagButton />
               </div>
             </div>
 

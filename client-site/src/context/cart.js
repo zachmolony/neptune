@@ -9,9 +9,9 @@ const saveCartToLocalStorage = (cart) => {
 
 const getCartFromLocalStorage = () => {
   const cart = localStorage.getItem("neptuneCart");
-  if (cart) {
-    return JSON.parse(cart);
-  }
+  // if (cart) {
+  //   return JSON.parse(cart);
+  // }
   return [];
 };
 
@@ -22,13 +22,14 @@ function cartReducer(state, action) {
       const productIndex = state.findIndex((p) => p.id === product.id);
       const newState = cloneDeep(state);
       if (productIndex === -1) {
+        console.log("product not found, adding", product, { ...product, quantity: 1 });
         newState.push({ ...product, quantity: 1 });
-        saveCartToLocalStorage(newState);
+        // saveCartToLocalStorage(newState);
         return newState;
       }
       newState[productIndex].quantity += 1;
 
-      saveCartToLocalStorage(newState);
+      // saveCartToLocalStorage(newState);
       return newState;
     }
     case "decreaseProductQuantity": {
@@ -36,7 +37,7 @@ function cartReducer(state, action) {
       const productIndex = state.findIndex((p) => p.id === product.id);
       const newState = cloneDeep(state);
       if (productIndex === -1) {
-        saveCartToLocalStorage(newState);
+        // saveCartToLocalStorage(newState);
         return newState;
       }
       if (newState[productIndex].quantity === 1) {
@@ -45,7 +46,7 @@ function cartReducer(state, action) {
         newState[productIndex].quantity -= 1;
       }
 
-      saveCartToLocalStorage(newState);
+      // saveCartToLocalStorage(newState);
       return newState;
     }
     case "increaseProductQuantity": {
@@ -53,12 +54,12 @@ function cartReducer(state, action) {
       const productIndex = state.findIndex((p) => p.id === product.id);
       const newState = cloneDeep(state);
       if (productIndex === -1) {
-        saveCartToLocalStorage(newState);
+        // saveCartToLocalStorage(newState);
         return newState;
       }
       newState[productIndex].quantity += 1;
 
-      saveCartToLocalStorage(newState);
+      // saveCartToLocalStorage(newState);
       return newState;
     }
     case "removeProduct": {
@@ -66,12 +67,12 @@ function cartReducer(state, action) {
       const productIndex = state.findIndex((p) => p.id === product.id);
       const newState = cloneDeep(state);
       if (productIndex === -1) {
-        saveCartToLocalStorage(newState);
+        // saveCartToLocalStorage(newState);
         return newState;
       }
       newState.splice(productIndex, 1);
 
-      saveCartToLocalStorage(newState);
+      // saveCartToLocalStorage(newState);
       return newState;
     }
     case "clearCart": {
@@ -125,8 +126,11 @@ function CartProvider({ children }) {
     return cart.length === 0;
   };
 
+  const cartSize = cart.reduce((acc, product) => acc + product.quantity, 0);
+
   const value = {
     cart,
+    cartSize,
     removeProduct,
     addProduct,
     decreaseProductQuantity,
