@@ -1,9 +1,8 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import axios from "axios";
-import OuterLimitsLogo from "../assets/outerlimitslogo.png";
-import DramaCallLogo from "../assets/dramacalllogo.png";
 import Avatar from "../assets/avatar.png";
 import ProfilePic from "../assets/profile_pic.png";
+import { DevelopersAPI } from "../api/API_INVOKE_URLS";
 
 const DeveloperContext = createContext({});
 
@@ -16,34 +15,17 @@ const useDeveloper = () => {
 };
 
 const DeveloperProvider = ({ children }) => {
+  const DEVELOPER_ID = "acct_1LQCioHAVsqmY1Os";
+
   const [fees, setFees] = useState(null);
-  const [clients, setClients] = useState([
-    {
-      id: "101",
-      name: "Outer Limits Studios",
-      link: "http://outerlimits.wtf",
-      logo: OuterLimitsLogo,
-      feeRate: 4.8,
-      monthly: 2347.11,
-      feesCollected: 105.62,
-    },
-    {
-      id: "102",
-      name: "Drama Call Clothing ",
-      link: "http://dramacall.com",
-      logo: DramaCallLogo,
-      feeRate: 2.3,
-      monthly: 3852.36,
-      feesCollected: 50.73,
-    },
-  ]);
+  const [clients, setClients] = useState([]);
   const [messages, setMessages] = useState([
     {
       id: "101",
       name: "Wade Warren",
-      client: "Outer Limits Studios",
+      client: "Outer Limits",
       message: "Hey! The new site...",
-      date: "2020-03-22",
+      date: "12-03-22",
       avatar: ProfilePic,
     },
     {
@@ -51,7 +33,7 @@ const DeveloperProvider = ({ children }) => {
       name: "Sam Sterland",
       client: "Drama Call Clothing",
       message: "could you change...",
-      date: "2020-02-13",
+      date: "27-02-22",
       avatar: Avatar,
     },
   ]);
@@ -60,7 +42,7 @@ const DeveloperProvider = ({ children }) => {
     const getFees = async () => {
       await axios({
         method: "get",
-        url: "http://localhost:4242/fees",
+        url: DevelopersAPI.getFees,
       }).then(function (response) {
         console.log("response", response);
         const totalFees = response.data.reduce((acc, fee) => acc + fee.amount, 0);
@@ -68,8 +50,33 @@ const DeveloperProvider = ({ children }) => {
       });
     };
 
+    const getClients = async () => {
+      await axios({
+        method: "get",
+        url: DevelopersAPI.getClientData,
+        params: {
+          devID: DEVELOPER_ID,
+        },
+      }).then(function (response) {
+        console.log("response", response);
+        setClients(response.data.Items);
+      });
+    };
+
+    // const getMessages = async () => {
+    //   await axios({
+    //     method: "get",
+    //     url: DevelopersAPI.getMessages,
+    //   }).then(function (response) {
+    //     console.log("response", response);
+    //     setMessages(response.data);
+    //   });
+    // };
+
     getFees();
-  });
+    getClients();
+    // getMessages();
+  }, []);
 
   const contextValue = {
     fees,

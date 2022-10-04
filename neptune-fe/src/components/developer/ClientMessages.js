@@ -14,7 +14,7 @@ const ClientMessages = ({ messages }) => {
           >
             <div className="flex w-full items-center">
               <div className="flex-2">
-                <img src={message.avatar} alt="" className="w-32 px-3" />
+                <img src={message.avatar} alt="" className="w-24 px-3" />
               </div>
               <div className="flex-1 pr-4 h-5/6">
                 <div className="flex h-full flex-col justify-between">

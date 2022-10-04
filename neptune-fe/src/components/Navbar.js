@@ -15,6 +15,10 @@ const navlinks = {
   developer: {
     dashboard: "Dashboard",
     clients: "Clients",
+    collectedFees: "Collected Fees",
+    messages: "Messages",
+    payouts: "Payouts",
+    settings: "Settings",
   },
 };
 

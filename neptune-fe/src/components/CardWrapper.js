@@ -6,7 +6,9 @@ const CardWrapper = ({ children, title, innerTitle, actions, buttonTitle }) => {
   return (
     <>
       <div className="flex justify-between">
-        <h1 className="text-2xl font-semibold">{title}</h1>
+        <h1 className="text-2xl font-semibold items-middle" style={{ height: "37px" }}>
+          {title}
+        </h1>
         {buttonTitle && <Button>{buttonTitle}</Button>}
       </div>
       <div className="py-2 h-full">

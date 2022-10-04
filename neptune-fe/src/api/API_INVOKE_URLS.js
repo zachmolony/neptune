@@ -1,5 +1,6 @@
 const baseUrl = "https://localhost:4242";
-// const baseUrl = 'https://api.neptune.com';
+
+const DEVELOPER_BASE_URL = "https://4xmiurcz4i.execute-api.eu-west-2.amazonaws.com/default";
 
 export const OrdersAPI = {
   getOrders: `${baseUrl}/orders`,
@@ -15,7 +16,7 @@ export const ProductsAPI = {
 };
 
 export const DevelopersAPI = {
-  getFees: "/developers/fees",
-  getClientData: "/developers/getAllClients",
+  getFees: "http://localhost:4242/fees",
+  getClientData: `${DEVELOPER_BASE_URL}/getAllClients`,
   getMessages: "/developers/getAllMessages",
 };

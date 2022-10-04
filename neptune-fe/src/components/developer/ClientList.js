@@ -5,7 +5,12 @@ const ClientList = ({ clients }) => {
   return (
     <>
       {clients.map((client, index) => (
-        <ClientListItem key={index} client={client} />
+        <div
+          className={index === 1 ? "" : "pb-3 mb-4"}
+          style={index === 1 ? {} : { boxShadow: "0px 1px 0px #E1E3E5" }}
+        >
+          <ClientListItem key={index} client={client} />
+        </div>
       ))}
     </>
   );

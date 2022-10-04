@@ -25,7 +25,7 @@ const Orders = () => {
 
   return (
     <Page fullWidth>
-      <PageHeading title="Orders" brand="Outer Limits Studios" />
+      <PageHeading title="Orders" brand="Outer Limits" />
       <Layout>
         <Layout.Section oneThird>
           <CardWrapper title="Needs Shipping">

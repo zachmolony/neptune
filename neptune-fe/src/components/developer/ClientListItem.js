@@ -4,15 +4,15 @@ import Button from "../atoms/Button";
 
 const ClientListItem = ({ client }) => {
   return (
-    <div className="pt-4 pb-3" style={{ boxShadow: "0px 1px 0px #E1E3E5" }}>
+    <>
       <div className="flex items-start justify-between">
         <div className="flex items-center w-3/5">
           <div>
-            <img src={client.logo} alt="" className="w-32 px-3" />
+            <img src={client.brandLogoLink} alt="" className="w-32 px-3" />
           </div>
           <div className="flex flex-col space-y-1">
             <div className="flex whitespace-nowrap">
-              <Heading className="">{client.name}</Heading>
+              <Heading className="">{client.clientName}</Heading>
               <div className="mx-1">
                 <Badge status="success" progress="complete">
                   Live
@@ -25,25 +25,25 @@ const ClientListItem = ({ client }) => {
               </div>
             </div>
             <div>
-              <Link href="http://outerlimits.wtf">{client.link}</Link>
+              <Link href="http://outerlimits.wtf">{client.brandLink}</Link>
             </div>
             <p>Fee Rate: {client.feeRate}%</p>
           </div>
         </div>
         <div className="w-1/6 my-1">
           <h3 className="text-center text-xs font-semibold pb-2">Monthly Revenue</h3>
-          <p className="text-2xl text-center">£{client.monthly}</p>
+          <p className="text-2xl text-center">£{client.monthlyRevenue}</p>
         </div>
-        <div className="w-1/6 my-1 mr-4">
+        <div className="w-1/6 my-1">
           <h3 className="text-center text-xs font-semibold pb-2">Fees Collected</h3>
           <p className="text-2xl text-center">£{client.feesCollected}</p>
         </div>
       </div>
-      <div className="flex justify-end mr-6">
+      <div className="flex justify-end">
         <Button type="secondary">Management Console</Button>
         <Button type="primary">Configure</Button>
       </div>
-    </div>
+    </>
   );
 };
 

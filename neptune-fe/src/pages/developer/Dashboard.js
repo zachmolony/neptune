@@ -1,31 +1,35 @@
-import { Page, Layout, Card } from "@shopify/polaris";
 import React from "react";
+import { Page, Layout, Card } from "@shopify/polaris";
+
 import CardWrapper from "../../components/CardWrapper";
 import PageHeading from "../../components/PageHeading";
-
-import { useDeveloper } from "../../context/developer.js";
 import ClientList from "../../components/developer/ClientList.js";
 import Loading from "../../components/atoms/Loading";
 import Fees from "../../components/developer/Fees";
 import ClientMessages from "../../components/developer/ClientMessages.js";
 
+import { useDeveloper } from "../../context/developer.js";
+
 const DashboardContent = () => {
   const { fees, clients, messages } = useDeveloper();
+
   return (
     <Page fullWidth>
-      <PageHeading title="Dashboard" brand="Outer Limits" />
+      <PageHeading title="Dashboard" brand="Zach Molony" />
       <Layout>
         <Layout.Section>
           <CardWrapper title="Clients" buttonTitle={"Add Client"}>
-            {clients ? <ClientList clients={clients} /> : <></>}
+            <div className="py-4 pr-4 pl-2">
+              {clients ? <ClientList clients={clients} /> : <Loading />}
+            </div>
           </CardWrapper>
         </Layout.Section>
 
         <Layout.Section secondary>
-          <CardWrapper title="Collected Fees" innerTitle="Total Fees">
+          <CardWrapper title="Fees" innerTitle="Total Fees">
             <Card.Section>{fees ? <Fees fees={fees} /> : <Loading />}</Card.Section>
           </CardWrapper>
-          <CardWrapper title="Client Messages">
+          <CardWrapper title="Messages">
             {messages ? <ClientMessages messages={messages} /> : <Loading />}
           </CardWrapper>
         </Layout.Section>
