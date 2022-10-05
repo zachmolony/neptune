@@ -1,5 +1,6 @@
 const express = require("express");
 const cors = require("cors");
+const serverless = require("serverless-http");
 const bodyParser = require("body-parser");
 // This is your test secret API key.
 const Stripe = require("stripe");
@@ -17,6 +18,9 @@ const port = 4242;
 
 app.use(express.static("public"));
 app.use(cors());
+
+// app.use(express.urlencoded({ extended: true }));
+// app.use(express.json());
 
 const calculateDeveloperFee = (lineItems) => {
   const total = lineItems.reduce((acc, item) => {
@@ -80,7 +84,7 @@ const generateLineItems = async (items) => {
 };
 
 app.post("/create-order", bodyParser.json(), async (req, res) => {
-  const { items } = req.body;
+  const { items, shipping_details, billing_details, shipping_method } = req.body;
 
   let lineItems;
   try {
@@ -256,4 +260,6 @@ app.get("/fees", async (req, res) => {
   res.send(applicationFees.data);
 });
 
-app.listen(port, () => console.log(`"Node server listening on port ${port}!"`));
+// app.listen(port, () => console.log(`"Node server listening on port ${port}!"`));
+
+module.exports.handler = serverless(app);
