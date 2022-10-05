@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import axios from "axios";
+import { ProductsAPI } from "../api/API_INVOKE_URLS";
 
 const ProductsContext = createContext({});
 
@@ -18,7 +19,7 @@ const ProductsProvider = ({ children }) => {
     const getProducts = () => {
       axios({
         method: "get",
-        url: "http://localhost:4242/products",
+        url: ProductsAPI.getProducts,
       }).then(function (response) {
         setProducts(response.data);
       });

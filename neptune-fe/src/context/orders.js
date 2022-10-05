@@ -11,7 +11,7 @@ const OrdersProvider = ({ children }) => {
     const getOrders = () => {
       axios({
         method: "get",
-        url: "http://localhost:4242/orders",
+        url: OrdersAPI.getOrders,
       }).then(function (response) {
         setOrders(response.data);
       });
