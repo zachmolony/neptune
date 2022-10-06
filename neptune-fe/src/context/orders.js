@@ -21,14 +21,22 @@ const OrdersProvider = ({ children }) => {
   }, []);
 
   const markOrderAsShipped = ({ id }) => {
-    orders.map((item) => (item.id === id ? (item.metadata.shipping_status = "shipped") : item));
-    // axios({
-    //   method: "post",
-    //   url: OrdersAPI.markOrderAsShipped,
-    //   query: id,
-    // }).then(function (response) {
-    //   setOrders(response.data);
-    // });
+    const newOrders = orders.map((item) => {
+      if (item.id === id) {
+        item.metadata.shipping_status = "shipped";
+      }
+      return item;
+    });
+
+    setOrders(newOrders);
+
+    axios({
+      method: "post",
+      url: OrdersAPI.markOrderAsShipped,
+      params: { orderId: id },
+    }).then(function (response) {
+      // setOrders(response.data);
+    });
   };
 
   const getOrderById = (orderId) => {

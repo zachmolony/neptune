@@ -20,6 +20,7 @@ const UnshippedOrders = ({ unshippedOrders, selectForShipping }) => {
       onAction: () => {
         setSelectedItems(selectedItems);
         selectForShipping(selectedItems);
+        setSelectedItems([]);
       },
     },
   ];

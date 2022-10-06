@@ -19,9 +19,6 @@ const port = 4242;
 app.use(express.static("public"));
 app.use(cors());
 
-// app.use(express.urlencoded({ extended: true }));
-// app.use(express.json());
-
 const calculateDeveloperFee = (lineItems) => {
   const total = lineItems.reduce((acc, item) => {
     return acc + item.price_data.unit_amount * item.quantity;
@@ -202,7 +199,7 @@ const populateOrderLineItems = async (completedOrders) => {
 app.get("/orders", async (req, res) => {
   const orders = await stripe.orders.list(
     {
-      limit: 20,
+      limit: 100,
     },
     { stripeAccount: clientID }
   );

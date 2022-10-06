@@ -80,8 +80,8 @@ const SelectedOrder = ({ selectedOrderData, completeShipping }) => {
             <Heading>Items</Heading>
             <div className="flex flex-col">
               {value.line_items.map((item) => (
-                <div>
-                  <div key={item.id} className="flex w-full h-18 justify-between my-2">
+                <div key={item.id}>
+                  <div className="flex w-full h-18 justify-between my-2">
                     <div className="flex">
                       <div className="w-1/3 mr-2">
                         <img src={item.product.images[0]} alt="" />
