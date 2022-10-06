@@ -41,7 +41,7 @@ export default function CheckoutPage() {
         .then((res) => res.json())
         .then((data) => setClientSecret(data.clientSecret));
     }
-  });
+  }, []);
 
   const appearance = {
     theme: "none",
