@@ -1,5 +1,3 @@
-const baseUrl = "https://localhost:4242";
-
 const DEVELOPER_BASE_URL = "https://4xmiurcz4i.execute-api.eu-west-2.amazonaws.com/default";
 
 const NEPTUNE_CORE_BASE_API = "https://3i3ax850tc.execute-api.eu-west-2.amazonaws.com/dev";
