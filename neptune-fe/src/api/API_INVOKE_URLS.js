@@ -5,6 +5,7 @@ const NEPTUNE_CORE_BASE_API = "https://3i3ax850tc.execute-api.eu-west-2.amazonaw
 export const OrdersAPI = {
   getOrders: `${NEPTUNE_CORE_BASE_API}/orders`,
   markOrderAsShipped: `${NEPTUNE_CORE_BASE_API}/orders/mark_order_as_shipped`,
+  markOrderAsShipped: `${CORE_BASE_URL}/orders/mark_as_shipped`,
 };
 
 export const ProductsAPI = {
