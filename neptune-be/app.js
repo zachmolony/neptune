@@ -23,7 +23,7 @@ const calculateDeveloperFee = (lineItems) => {
   const total = lineItems.reduce((acc, item) => {
     return acc + item.price_data.unit_amount * item.quantity;
   }, 500);
-  return Math.round(total * 0.05);
+  return Math.round(total * 0.032);
 };
 
 const getProducts = async () => {
@@ -171,7 +171,6 @@ const getOrderLineItems = async (orderId) => {
     { stripeAccount: clientID }
   );
 
-  console.log("Lineitems:", await lineItems);
   return await lineItems;
 };
 
@@ -190,7 +189,6 @@ const populateOrderLineItems = async (completedOrders) => {
     completedOrders.map(async (order) => {
       const lineItems = await getOrderLineItems(order.id);
       order.line_items = await populateLineItems(lineItems.data);
-      console.log("order:", order);
       return order;
     })
   );
@@ -199,7 +197,7 @@ const populateOrderLineItems = async (completedOrders) => {
 app.get("/orders", async (req, res) => {
   const orders = await stripe.orders.list(
     {
-      limit: 100,
+      limit: 50,
     },
     { stripeAccount: clientID }
   );
@@ -251,7 +249,7 @@ app.get("/order", async (req, res) => {
 
 app.get("/fees", async (req, res) => {
   const applicationFees = await stripe.applicationFees.list({
-    limit: 10,
+    limit: 100,
   });
 
   res.send(applicationFees.data);
