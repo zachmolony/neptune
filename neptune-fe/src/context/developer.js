@@ -18,6 +18,7 @@ const DeveloperProvider = ({ children }) => {
   const DEVELOPER_ID = "acct_1LQCioHAVsqmY1Os";
 
   const [fees, setFees] = useState(null);
+  const [recentFee, setRecentFee] = useState(null);
   const [clients, setClients] = useState([]);
   const [messages, setMessages] = useState([
     {
@@ -44,9 +45,10 @@ const DeveloperProvider = ({ children }) => {
         method: "get",
         url: DevelopersAPI.getFees,
       }).then(function (response) {
-        console.log("response", response);
         const totalFees = response.data.reduce((acc, fee) => acc + fee.amount, 0);
+        const recentFee = response.data[0];
         setFees(totalFees);
+        setRecentFee(recentFee);
       });
     };
 
@@ -80,6 +82,7 @@ const DeveloperProvider = ({ children }) => {
 
   const contextValue = {
     fees,
+    recentFee,
     clients,
     messages,
   };

@@ -11,7 +11,7 @@ import ClientMessages from "../../components/developer/ClientMessages.js";
 import { useDeveloper } from "../../context/developer.js";
 
 const DashboardContent = () => {
-  const { fees, clients, messages } = useDeveloper();
+  const { fees, recentFee, clients, messages } = useDeveloper();
 
   return (
     <Page fullWidth>
@@ -26,8 +26,10 @@ const DashboardContent = () => {
         </Layout.Section>
 
         <Layout.Section secondary>
-          <CardWrapper title="Fees" innerTitle="Total Fees">
-            <Card.Section>{fees ? <Fees fees={fees} /> : <Loading />}</Card.Section>
+          <CardWrapper title="Fees" innerTitle="Collected Fees">
+            <Card.Section>
+              {fees ? <Fees fees={fees} recentFee={recentFee} /> : <Loading />}
+            </Card.Section>
           </CardWrapper>
           <CardWrapper title="Messages">
             {messages ? <ClientMessages messages={messages} /> : <Loading />}
