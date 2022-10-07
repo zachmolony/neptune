@@ -5,6 +5,7 @@ import { Button, TextStyle, Icon, Badge, Heading } from "@shopify/polaris";
 import { NoteMinor, ConversationMinor } from "@shopify/polaris-icons";
 import { formatCurrency } from "../../utils/formatting";
 import dayjs from "dayjs";
+import SelectedOrderLineItem from "./SelectedOrderLineItem";
 
 const SelectedOrder = ({ selectedOrderData, completeShipping }) => {
   const [value, setValue] = useState(null);
@@ -80,27 +81,7 @@ const SelectedOrder = ({ selectedOrderData, completeShipping }) => {
             <Heading>Items</Heading>
             <div className="flex flex-col">
               {value.line_items.map((item) => (
-                <div key={item.id}>
-                  <div className="flex w-full h-18 justify-between my-2">
-                    <div className="flex">
-                      <div className="w-1/3 mr-2">
-                        <img src={item.product.images[0]} alt="" />
-                      </div>
-                      <div>
-                        <Heading>{item.description}</Heading>
-                        <div>Size • One Size</div>
-                      </div>
-                    </div>
-                    <div>
-                      <TextStyle variation="strong">
-                        {formatCurrency(item.amount_subtotal)}
-                      </TextStyle>
-                    </div>
-                  </div>
-                  <div className="flex w-full justify-end -mt-8">
-                    <Button>Bag</Button>
-                  </div>
-                </div>
+                <SelectedOrderLineItem key={item.id} item={item} />
               ))}
             </div>
           </div>

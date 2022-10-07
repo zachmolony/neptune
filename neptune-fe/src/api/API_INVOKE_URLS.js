@@ -1,15 +1,19 @@
+const DEVELOPMENT_URL = "http://localhost:4242";
+
 const DEVELOPER_BASE_URL = "https://4xmiurcz4i.execute-api.eu-west-2.amazonaws.com/default";
 
 const NEPTUNE_CORE_BASE_API = "https://3i3ax850tc.execute-api.eu-west-2.amazonaws.com/dev";
 
+const CORE_BASE_URL =
+  process.env.NODE_ENV === "development" ? DEVELOPMENT_URL : NEPTUNE_CORE_BASE_API;
+
 export const OrdersAPI = {
-  getOrders: `${NEPTUNE_CORE_BASE_API}/orders`,
-  markOrderAsShipped: `${NEPTUNE_CORE_BASE_API}/orders/mark_order_as_shipped`,
+  getOrders: `${CORE_BASE_URL}/orders`,
   markOrderAsShipped: `${CORE_BASE_URL}/orders/mark_as_shipped`,
 };
 
 export const ProductsAPI = {
-  getProducts: `${NEPTUNE_CORE_BASE_API}/products`,
+  getProducts: `${CORE_BASE_URL}/products`,
   getProductById: "/products/:id",
   createProduct: "/products",
   updateProduct: "/products/:id",
@@ -17,7 +21,7 @@ export const ProductsAPI = {
 };
 
 export const DevelopersAPI = {
-  getFees: `${NEPTUNE_CORE_BASE_API}/fees`,
+  getFees: `${CORE_BASE_URL}/fees`,
   getClientData: `${DEVELOPER_BASE_URL}/getAllClients`,
   getMessages: "/developers/getAllMessages",
 };
