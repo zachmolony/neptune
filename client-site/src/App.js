@@ -33,7 +33,7 @@ function App() {
               </div>
             </div>
 
-            <div className="w-5/12 my-6 mx-auto text-center">
+            <div className="w-5/12 mt-1 pb-24 mx-auto text-center">
               <Outlet />
             </div>
           </div>

@@ -126,6 +126,12 @@ function CartProvider({ children }) {
     return cart.length === 0;
   };
 
+  const cartTotal = () => {
+    return (
+      cart.reduce((acc, product) => acc + product.price.unit_amount * product.quantity, 0) / 100
+    );
+  };
+
   const cartSize = cart.reduce((acc, product) => acc + product.quantity, 0);
 
   const value = {
@@ -137,6 +143,7 @@ function CartProvider({ children }) {
     increaseProductQuantity,
     clearCart,
     isEmpty,
+    cartTotal,
   };
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
 }
