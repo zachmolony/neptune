@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { useParallax } from "react-scroll-parallax";
+import { ReactLenis, useLenis } from "@studio-freight/react-lenis";
 
 import Stars from "../assets/stars.webp";
 import NeptuneLogo from "../assets/planet.jpeg";
@@ -67,11 +68,16 @@ const features = {
     highlighted: "start earning",
     img: [DeveloperImage],
     alt: "Tools",
-    subtitle: "Neptune allows you to manage your fees, websites, and communicate with clients.",
+    subtitle:
+      "Neptune allows you to manage your fees, websites, and communicate with clients.",
   },
 };
 
 const Home = () => {
+  const lenis = useLenis(({ scroll }) => {
+    // called every scroll
+  });
+
   const planetScroll = useParallax({ speed: 4, translateY: [20, -110] });
   const landingTextScroll = useParallax({ speed: 10 });
 
@@ -79,89 +85,97 @@ const Home = () => {
   const textScroll = useParallax({ speed: -10 });
   return (
     <>
-      <div className="h-full w-full bg-secondary text-white">
-        <img src={Stars} alt="" className="w-full h-screen opacity-40 absolute object-cover" />
+      <ReactLenis root>
+        <div className="h-full w-full bg-secondary text-white">
+          <img
+            src={Stars}
+            alt=""
+            className="w-full h-screen opacity-40 absolute object-cover"
+          />
 
-        <div className="w-full h-screen absolute flex">
-          <div className="w-full relative">
-            <div className="h-full flex">
-              <img
-                src={NeptuneLogo}
-                alt="Planet Neptune"
-                ref={planetScroll.ref}
-                className="relative top-1/2 -translate-y-1/2 mx-auto max-h-sm justify-center h-1/2"
-              />
+          <div className="w-full h-screen absolute flex">
+            <div className="w-full relative">
+              <div className="h-full flex">
+                <img
+                  src={NeptuneLogo}
+                  alt="Planet Neptune"
+                  ref={planetScroll.ref}
+                  className="relative top-1/2 -translate-y-1/2 mx-auto max-h-sm justify-center h-1/2"
+                />
+              </div>
             </div>
           </div>
-        </div>
-        <div className="h-screen m-auto xl:max-w-screen-2xl flex">
-          <div
-            className="w-full h-4/5 mx-12 my-auto z-10 relative flex"
-            ref={landingTextScroll.ref}
-          >
-            <div className="w-1/2">
-              <h1 className="p-32 font-bold text-6xl xl:text-7xl">
-                Welcome to <strong className="font-black">Neptune.</strong>
-              </h1>
-            </div>
-            <div className="w-1/2 mt-auto 2xl:pl-32">
-              <h2 className="pl-24 pr-8 lg:pl-32 ml-12 pb-32 font-bold text-2xl">
-                The free e-commerce platform built by developers, for developers.
-              </h2>
+          <div className="h-screen m-auto xl:max-w-screen-2xl flex">
+            <div
+              className="w-full h-4/5 mx-12 my-auto z-10 relative flex"
+              ref={landingTextScroll.ref}
+            >
+              <div className="w-1/2">
+                <h1 className="p-32 font-bold text-6xl xl:text-7xl">
+                  Welcome to <strong className="font-black">Neptune.</strong>
+                </h1>
+              </div>
+              <div className="w-1/2 mt-auto 2xl:pl-32">
+                <h2 className="pl-24 pr-8 lg:pl-32 ml-12 pb-32 font-bold text-2xl">
+                  The free e-commerce platform built by developers, for
+                  developers.
+                </h2>
+              </div>
             </div>
           </div>
-        </div>
-        <HomeBar />
+          <HomeBar />
 
-        {Object.keys(content).map((page, index) => (
+          {Object.keys(content).map((page, index) => (
+            <PageWrapper>
+              <SalesContent {...content[page]} flipped={!!(index % 2)} />
+            </PageWrapper>
+          ))}
+
           <PageWrapper>
-            <SalesContent {...content[page]} flipped={!!(index % 2)} />
+            <CodeContent {...codeContent} flipped />
           </PageWrapper>
-        ))}
 
-        <PageWrapper>
-          <CodeContent {...codeContent} flipped />
-        </PageWrapper>
+          {Object.keys(features).map((page, index) => (
+            <PageWrapper>
+              <FeaturesContent {...features[page]} flipped={!!(index % 2)} />
+            </PageWrapper>
+          ))}
 
-        {Object.keys(features).map((page, index) => (
-          <PageWrapper>
-            <FeaturesContent {...features[page]} flipped={!!(index % 2)} />
-          </PageWrapper>
-        ))}
-
-        {false && (
-          <PageWrapper>
-            <Features />
-          </PageWrapper>
-        )}
-
-        <PageWrapper>
-          {true && (
-            <div className="w-5/12 h-1/2 justify-center flex items-center">
-              <img
-                src={NeptuneLogo}
-                alt={"alt"}
-                ref={imageScroll.ref}
-                style={{ maxHeight: "100%" }}
-              />
-            </div>
+          {false && (
+            <PageWrapper>
+              <Features />
+            </PageWrapper>
           )}
 
-          <div className="w-7/12" ref={textScroll.ref}>
-            <h1 className="text-6xl font-bold mb-33">
-              E-commerce made simple. <span className="text-primary">That’s Neptune.</span>
-            </h1>
-            <h2 className="text-2xl text-lightGray">
-              Register for the Beta{" "}
-              <Link to="/" className="text-primary underline">
-                here.
-              </Link>
-            </h2>
-          </div>
-        </PageWrapper>
+          <PageWrapper>
+            {true && (
+              <div className="w-5/12 h-1/2 justify-center flex items-center">
+                <img
+                  src={NeptuneLogo}
+                  alt={"alt"}
+                  ref={imageScroll.ref}
+                  style={{ maxHeight: "100%" }}
+                />
+              </div>
+            )}
 
-        <Footer />
-      </div>
+            <div className="w-7/12" ref={textScroll.ref}>
+              <h1 className="text-6xl font-bold mb-33">
+                E-commerce made simple.{" "}
+                <span className="text-primary">That’s Neptune.</span>
+              </h1>
+              <h2 className="text-2xl text-lightGray">
+                Register for the Beta{" "}
+                <Link to="/" className="text-primary underline">
+                  here.
+                </Link>
+              </h2>
+            </div>
+          </PageWrapper>
+
+          <Footer />
+        </div>
+      </ReactLenis>
     </>
   );
 };
